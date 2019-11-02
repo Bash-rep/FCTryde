@@ -23,7 +23,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
-		String cmd = "";
+		String cmd = " ";
 		Ryde ride = new RydeClass();
 		while(!cmd.equalsIgnoreCase(EXIT)) {
 			cmd = readCmd(in);
