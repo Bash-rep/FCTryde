@@ -18,8 +18,6 @@ public class TripClass implements Trip {
 		this.date= date;
 		this.duration = duration;
 		this.seats = seats;
-		queue = new QueueInList<>();
-		inCar = new MapWithJavaClass<>(seats);
 	}
 	
 	public User queue(User user) {

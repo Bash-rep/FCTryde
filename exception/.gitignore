@@ -1,0 +1,9 @@
+/DuplicateUserException.class
+/InvalidPasswordException.class
+/InvalidTripDateException.class
+/MultipleLogInException.class
+/NoLogInException.class
+/NoSuchUserException.class
+/TripHasRidesException.class
+/TwoTripsOnSameDayException.class
+/UserAlreadyExistsException.class
