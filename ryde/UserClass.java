@@ -45,10 +45,19 @@ public class UserClass implements User {
 
 	@Override
 	public int addTrip(Date date, Trip trip) throws TwoTripsOnSameDayException {
-		// TODO Auto-generated method stub
-		return 0;
+		if(rides.find(date) != null || trips.find(date) != null) throw new TwoTripsOnSameDayException();
+		trips.insert(date, trip);
+		return trips.size();
 	}
 
+	@Override
+	public Trip removeTrip(Date date) throws TripHasRidesException, InvalidTripDateException{
+		Trip trip;
+		if((trip = trips.find(date)) == null) throw new InvalidTripDateException();
+		if(trip.takenSeats() > 0) throw new TripHasRidesException();
+		return trips.remove(date);
+	}
+	
 	@Override
 	public int addRide(Date date, Trip trip) throws TwoTripsOnSameDayException{
 		// TODO Auto-generated method stub
@@ -62,11 +71,6 @@ public class UserClass implements User {
 		return null;
 	}
 
-	@Override
-	public Trip removeTrip(Date date) throws TripHasRidesException, InvalidTripDateException{
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 	@Override
 	public int incNumberOfVisits() {return ++visits;}

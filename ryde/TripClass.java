@@ -28,7 +28,6 @@ public class TripClass implements Trip {
 	}
 
 	public User cancelRide(User user) {
-
 		return owner;
 	}
 
@@ -40,6 +39,11 @@ public class TripClass implements Trip {
 	@Override
 	public int freeSeats() {
 		return seats - inCar.size();
+	}
+	
+	@Override
+	public int takenSeats() {
+		return inCar.size();
 	}
 
 	@Override

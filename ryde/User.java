@@ -33,7 +33,7 @@ public interface User {
 	 * 
 	 * @param date
 	 * @param trip
-	 * @return
+	 * @return number of trips
 	 * @throws TwoTripsOnSameDayException
 	 */
 	int addTrip(Date date, Trip trip) throws TwoTripsOnSameDayException;
@@ -46,9 +46,9 @@ public interface User {
 	String getEmail();
 	
 	/**
-	 * removes the trip this user has on this da. on succes returns the trip that was removed. If there is no trip on this date or the trip as already other users on the ride it throws an exception
+	 * removes the trip this user has on this date. on success returns the trip that was removed. If there is no trip on this date or the trip as already other users on the ride it throws an exception
 	 * @param date
-	 * @return
+	 * @return removed trip
 	 * @throws TripHasRidesException
 	 * @throws InvalidTripDateException
 	 */

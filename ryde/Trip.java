@@ -44,5 +44,11 @@ public interface Trip {
 	 */
 	int freeSeats();
 	
+	/**
+	 * returns the number of taken seats.
+	 * @return
+	 */
+	int takenSeats();
+	
 	
 }
