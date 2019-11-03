@@ -99,13 +99,16 @@ public class Main {
 		
 		if (!ryde.hasUser(email))
 			System.out.println(NO_SUCH_USER);
+		else if (ryde.getCurrentUser() != null)
+			System.out.println(INVALID_CMD);
 		else {
 			String pwd = in.nextLine();
-			
-			try {
-				System.out.printf(SUCCESSFUL_LOGIN, ryde.logIn(email, pwd));
-			} catch (InvalidPasswordException | MultipleLogInException | NoSuchUserException e) {
-				e.printStackTrace();
+			for (int i = 0; i < 3; i++) {
+				try {
+					int numLogins = ryde.logIn(email, pwd);
+					System.out.printf(SUCCESSFUL_LOGIN, numLogins);
+					i = 3;
+				} catch (InvalidPasswordException e) {}
 			}
 		}
 	}
