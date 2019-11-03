@@ -15,11 +15,19 @@ public class RydeClass implements Ryde {
 		this.users = new MapWithJavaClass<String, User>();
 		this.current = null;
 	}
+	
+	@Override
+	public boolean hasUser(String email) {
+		return users.find(email) != null;
+	}
 
 	@Override
-	public int addUser(String email, String nome, String password) throws UserAlreadyExistsException {
+	public int addUser(String email, String nome, String password){
+		
 		User user = new UserClass(email, password, nome);
+		
 		users.insert(email, user);
+		
 		return users.size();
 	}
 

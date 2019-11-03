@@ -114,4 +114,13 @@ public interface Ryde {
 	 * @throws InvalidTripDateException
 	 */
 	Trip getTripInfo(String owner, Date date) throws NoLogInException, NoSuchUserException, InvalidTripDateException;
+
+	/**
+	 * Checks whether a user with the email </email> exists. Returns true if yes,
+	 * false otherwise
+	 * 
+	 * @param email
+	 * @return true if user exists, false if not
+	 */
+	boolean hasUser(String email);
 }
