@@ -23,11 +23,8 @@ public class RydeClass implements Ryde {
 
 	@Override
 	public int addUser(String email, String nome, String password) {
-
 		User user = new UserClass(email, password, nome);
-
 		users.insert(email, user);
-
 		return users.size();
 	}
 	
@@ -38,14 +35,32 @@ public class RydeClass implements Ryde {
 
 	@Override
 	public String logOut() throws NoLogInException {
-		// TODO Auto-generated method stub
-		return null;
+		String prevLoggedEmail;
+		
+		if (current == null)
+			throw new NoLogInException();
+		else {
+			prevLoggedEmail = current.getEmail();
+			current = null;
+		}
+		
+		return prevLoggedEmail;
 	}
 
 	@Override
 	public int logIn(String email, String pwd)
 			throws InvalidPasswordException, MultipleLogInException, NoSuchUserException {
-		// TODO Auto-generated method stub
+		User user;
+		
+		if (current != null)
+			throw new MultipleLogInException();
+		else if (!hasUser(email))
+			throw new NoSuchUserException();
+		else if (!(user = users.find(email)).checkPassword(pwd))
+			throw new InvalidPasswordException();
+		else
+			current = user;
+		
 		return 0;
 	}
 
