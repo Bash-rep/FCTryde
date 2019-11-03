@@ -11,6 +11,7 @@ public class UserClass implements User {
 		this.email = email;
 		this.password = password;
 		this.nomeCompleto = nomeCompleto;
+		
 	}
 	
 	@Override
