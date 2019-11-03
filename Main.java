@@ -27,7 +27,7 @@ public class Main {
 	private static final String VALID_PWD = "password (entre 4 e 6 caracteres - digitos e letras): ";
 	private static final String SIGNUP_SUCCESS = "Registo %d efetuado.\n";
 	private static final String FAREWELL = "Ate a proxima %s.\n";
-	private static final String NO_SUCH_USER = "Utilizador nao existente.\n";
+	private static final String NO_SUCH_USER = "Utilizador nao existente.";
 	private static final String SUCCESSFUL_LOGIN = "Visita %d efetuada.\n";
 
 	public static void main(String[] args) {
@@ -35,6 +35,7 @@ public class Main {
 		String cmd = " ";
 		Ryde ryde = new RydeClass();
 		while (!cmd.equalsIgnoreCase(EXIT)) {
+			printPrompt(ryde);
 			cmd = readCmd(in);
 			switch (cmd) {
 			case LIST:
@@ -69,19 +70,27 @@ public class Main {
 		}
 	}
 
+	private static void printPrompt(Ryde ryde) {
+		String email;
+		if ((email = ryde.getCurrentUserEmail()) == null)
+			System.out.print("> ");
+		else {
+			System.out.print(email + " > ");
+		}
+	}
+
 	private static void processSignup(Scanner in, Ryde ryde) {
 		int i = 0;
 		String email, name = "", pwd = "";
 
-		email = in.nextLine();
+		email = in.nextLine().trim();
 		if (ryde.hasUser(email))
 			System.out.println(UTILIZADOR_JA_EXISTENTE);
-		else if (ryde.getCurrentUser() != null) {
+		else if (ryde.getCurrentUserEmail() != null) {
 			System.out.println(INVALID_CMD);
 		} else {
 			System.out.print(VALID_NAME);
 			name = in.nextLine().trim();
-
 			while (i > -1 && i < 3) {
 				System.out.print(VALID_PWD);
 				pwd = in.nextLine();
@@ -99,19 +108,19 @@ public class Main {
 	}
 
 	private static void processLogout(Ryde ryde) {
-		if (ryde.getCurrentUser() == null)
+		if (ryde.getCurrentUserEmail() == null)
 			System.out.println(INVALID_CMD);
 		else
 			System.out.printf(FAREWELL, ryde.logOut());
 	}
 
 	private static void processLogin(Scanner in, Ryde ryde) {
-		String email = in.nextLine();
+		String email = in.nextLine().trim();
 
-		if (!ryde.hasUser(email)) {
-			System.out.println(NO_SUCH_USER);
-		} else if (ryde.getCurrentUser() != null) {
+		if (ryde.getCurrentUserEmail() != null) {
 			System.out.println(INVALID_CMD);
+		} else if (!ryde.hasUser(email)) {
+			System.out.println(NO_SUCH_USER);
 		} else {
 			int logins = -1;
 			for (int i = 0; i < 3 && logins == -1; i++) {
@@ -133,8 +142,8 @@ public class Main {
 	}
 
 	private static void newTrip(Scanner in, Ryde ryde) {
-		String start = in.nextLine();
-		String end = in.nextLine();
+		String start = in.nextLine().trim();
+		String end = in.nextLine().trim();
 		String dateStr = in.next().trim();
 		String time = in.next().trim();
 		String duration = in.next();

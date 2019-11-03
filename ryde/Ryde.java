@@ -122,9 +122,9 @@ public interface Ryde {
 	boolean hasUser(String email);
 
 	/**
-	 * Returns the currently logged in user
+	 * Returns the currently logged in user email
 	 * 
 	 * @return current user
 	 */
-	User getCurrentUser();
+	String getCurrentUserEmail();
 }

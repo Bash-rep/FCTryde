@@ -80,8 +80,9 @@ public class RydeClass implements Ryde {
 	}
 
 	@Override
-	public User getCurrentUser() {
-		return current;
+	public String getCurrentUserEmail() {
+		if(current == null) return null;
+		return current.getEmail();
 	}
 
 	@Override
