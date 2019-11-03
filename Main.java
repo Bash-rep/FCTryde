@@ -110,6 +110,33 @@ public class Main {
 		}
 	}
 	
+	private static void newTrip(Scanner in, Ryde ryde) {
+		String start = in.nextLine();
+		String end = in.nextLine();
+		String dateStr = in.next().trim();
+		String time = in.next().trim();
+		String duration = in.next();
+		int seats = in.nextInt();
+		in.nextLine();
+		
+		String[] splitDate = dateStr.split("-");
+		String[] splitTime = time.split(":");
+		
+		Date date = new Date(Integer.parseInt(splitDate[2]), Integer.parseInt(splitDate[1]),
+				Integer.parseInt(splitDate[0]), Integer.parseInt(splitTime[0]), Integer.parseInt(splitTime[1]));
+	}
+	
+	private static void removeTrip(Scanner in, Ryde ryde) {
+		String dateStr = in.next().trim();
+		String time = in.nextLine();
+		
+		String[] splitDate = dateStr.split("-");
+		String[] splitTime = time.split(":");
+		
+		Date date = new Date(Integer.parseInt(splitDate[2]), Integer.parseInt(splitDate[1]),
+				Integer.parseInt(splitDate[0]), Integer.parseInt(splitTime[0]), Integer.parseInt(splitTime[1]));
+	}
+	
 	private static boolean isValid(String pwd) {
 		if (pwd.toCharArray().length > 3 && pwd.toCharArray().length < 7
 				&& pwd.chars().anyMatch(Character::isLetter) && pwd.chars().anyMatch(Character::isDigit)
