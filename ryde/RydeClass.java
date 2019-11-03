@@ -35,8 +35,7 @@ public class RydeClass implements Ryde {
 
 	@Override
 	public String logOut() {
-		String prevLoggedEmail;
-		prevLoggedEmail = current.getEmail();
+		String prevLoggedEmail = current.getEmail();
 		current = null;
 		return prevLoggedEmail;
 	}
