@@ -20,6 +20,21 @@ public interface User {
 	 * @return
 	 */
 	int addRide(Date date, Trip trip);
+
+	/**
+	 * Adds a new trip to the user. It adds this trip to the trips map and uses date
+	 * as key
+	 * 
+	 * @param date
+	 * @param trip
+	 * @return
+	 */
+	int addTrip(Date date, Trip trip);
 	
+	/**
+	 * returns this user's  email
+	 * @return
+	 */
+	String getEmail();
 	
 }
