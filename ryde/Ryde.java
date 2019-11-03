@@ -4,7 +4,6 @@ import exception.DuplicateUserException;
 import exception.InvalidPasswordException;
 import exception.InvalidTripDateException;
 import exception.MultipleLogInException;
-import exception.NoLogInException;
 import exception.NoSuchUserException;
 import exception.TripHasRidesException;
 import exception.TwoTripsOnSameDayException;
@@ -29,7 +28,7 @@ public interface Ryde {
 	 * @return the previous logged in user
 	 * @throws NoLogInException
 	 */
-	String logOut() throws NoLogInException;
+	String logOut();
 
 	/**
 	 * logs a user to the system and returns the number of logins of this user. If
@@ -56,7 +55,7 @@ public interface Ryde {
 	 * @throws TwoTripsOnSameDayException
 	 */
 	int addTrip(String start, String end, Date date, int duration, int seats)
-			throws NoLogInException, TwoTripsOnSameDayException;
+			throws  TwoTripsOnSameDayException;
 
 	/**
 	 * removes a trip on this given date from the logged in user. if there is rides
@@ -70,7 +69,7 @@ public interface Ryde {
 	 * @throws NoLogInException
 	 * @throws InvalidTripDateException
 	 */
-	Trip removeTrip(Date date) throws TripHasRidesException, NoLogInException, InvalidTripDateException;
+	Trip removeTrip(Date date) throws TripHasRidesException , InvalidTripDateException;
 
 	/**
 	 * Adds a new ride to the user who is logged in (who cannot have a trip or ride
@@ -84,7 +83,7 @@ public interface Ryde {
 	 * @throws NoSuchUserException
 	 * @throws InvalidTripDateException
 	 */
-	int addRide(String driver, Date date) throws DuplicateUserException, NoLogInException, NoSuchUserException,
+	int addRide(String driver, Date date) throws DuplicateUserException,   NoSuchUserException,
 			InvalidTripDateException, TwoTripsOnSameDayException;
 
 	/**
@@ -98,7 +97,7 @@ public interface Ryde {
 	 * @throws NoLogInException
 	 * @throws InvalidTripDateException
 	 */
-	String removeRide(Date date) throws NoLogInException, InvalidTripDateException;
+	String removeRide(Date date) throws  InvalidTripDateException;
 
 	/**
 	 * Gets the information about the trip happening on this date from this user. It
@@ -112,7 +111,7 @@ public interface Ryde {
 	 * @throws NoSuchUserException
 	 * @throws InvalidTripDateException
 	 */
-	Trip getTripInfo(String owner, Date date) throws NoLogInException, NoSuchUserException, InvalidTripDateException;
+	Trip getTripInfo(String owner, Date date) throws  NoSuchUserException, InvalidTripDateException;
 
 	/**
 	 * Checks whether a user with the email </email> exists. Returns true if yes,
