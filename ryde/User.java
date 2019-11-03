@@ -20,5 +20,6 @@ public interface User {
 	 * @return
 	 */
 	int addRide(Date date, Trip trip);
-
+	
+	
 }
