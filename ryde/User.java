@@ -36,5 +36,4 @@ public interface User {
 	 * @return
 	 */
 	String getEmail();
-	
 }

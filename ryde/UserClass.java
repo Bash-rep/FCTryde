@@ -1,6 +1,7 @@
 package ryde;
 
 import dataStructures.Map;
+import dataStructures.MapWithJavaClass;
 
 public class UserClass implements User {
 	Map<Date,Trip> rides;//boleias
@@ -11,7 +12,8 @@ public class UserClass implements User {
 		this.email = email;
 		this.password = password;
 		this.nomeCompleto = nomeCompleto;
-		
+		rides = new MapWithJavaClass<Date, Trip>();
+		trips = new MapWithJavaClass<Date, Trip>();
 	}
 	
 	@Override
