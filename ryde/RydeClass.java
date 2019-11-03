@@ -12,47 +12,43 @@ public class RydeClass implements Ryde {
 
 	public RydeClass() {
 		this.ridesByDate = new MapWithJavaClass<String, Map<String, Trip>>();
+		
 		this.users = new MapWithJavaClass<String, User>();
+		
 		this.current = null;
 	}
-
-	@Override
-	public boolean hasUser(String email) {
-		return users.find(email) != null;
-	}
-
-	@Override
-	public int addUser(String email, String nome, String password) {
-		User user = new UserClass(email, password, nome);
-		users.insert(email, user);
-		return users.size();
-	}
-
-	@Override
-	public User getCurrentUser() {
-		return current;
-	}
-
+	
 	@Override
 	public String logOut() {
 		String prevLoggedEmail = current.getEmail();
+		
 		current = null;
+		
 		return prevLoggedEmail;
 	}
 
 	@Override
 	public int logIn(String email, String pwd)
-			throws InvalidPasswordException, NoSuchUserException {
+			throws InvalidPasswordException {
 		User user;
-		if (!hasUser(email))
-			throw new NoSuchUserException();
-		else if (!(user = users.find(email)).checkPassword(pwd))
-			throw new InvalidPasswordException();
+		
+	    if (!(user = users.find(email)).checkPassword(pwd)) throw new InvalidPasswordException();
+	    
 		else
 			current = user;
 
 		return current.incNumberOfVisits();
 	}
+
+	@Override
+	public int addUser(String email, String nome, String password) {
+		User user = new UserClass(email, password, nome);
+		
+		users.insert(email, user);
+		
+		return users.size();
+	}
+
 
 	@Override
 	public int addTrip(String start, String end, Date date, int duration, int seats) throws TwoTripsOnSameDayException {
@@ -66,7 +62,7 @@ public class RydeClass implements Ryde {
 
 	@Override
 	public int addRide(String driver, Date date)
-			throws DuplicateUserException, NoSuchUserException, InvalidTripDateException, TwoTripsOnSameDayException {
+			throws DuplicateUserException, InvalidTripDateException, TwoTripsOnSameDayException {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -78,8 +74,20 @@ public class RydeClass implements Ryde {
 	}
 
 	@Override
-	public Trip getTripInfo(String owner, Date date) throws NoSuchUserException, InvalidTripDateException {
+	public Trip getTripInfo(String owner, Date date) throws InvalidTripDateException {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public User getCurrentUser() {
+		return current;
+	}
+
+	@Override
+	public boolean hasUser(String email) {
+		return users.find(email) != null;
+	}
+
+
 }

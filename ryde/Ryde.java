@@ -3,7 +3,7 @@ package ryde;
 import exception.DuplicateUserException;
 import exception.InvalidPasswordException;
 import exception.InvalidTripDateException;
-import exception.NoSuchUserException;
+
 import exception.TripHasRidesException;
 import exception.TwoTripsOnSameDayException;
 
@@ -37,7 +37,7 @@ public interface Ryde {
 	 * @return number of log ins
 	 * @throws InvalidPasswordException
 	 */
-	int logIn(String email, String pwd) throws InvalidPasswordException, NoSuchUserException;
+	int logIn(String email, String pwd) throws InvalidPasswordException;
 
 	/**
 	 * Adds a new trip to the person currently logged in and returns the number of
@@ -82,7 +82,7 @@ public interface Ryde {
 	 * @throws NoSuchUserException
 	 * @throws InvalidTripDateException
 	 */
-	int addRide(String driver, Date date) throws DuplicateUserException,   NoSuchUserException,
+	int addRide(String driver, Date date) throws DuplicateUserException,
 			InvalidTripDateException, TwoTripsOnSameDayException;
 
 	/**
@@ -110,7 +110,7 @@ public interface Ryde {
 	 * @throws NoSuchUserException
 	 * @throws InvalidTripDateException
 	 */
-	Trip getTripInfo(String owner, Date date) throws  NoSuchUserException, InvalidTripDateException;
+	Trip getTripInfo(String owner, Date date) throws InvalidTripDateException;
 
 	/**
 	 * Checks whether a user with the email </email> exists. Returns true if yes,
