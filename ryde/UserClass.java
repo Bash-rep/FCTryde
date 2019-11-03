@@ -2,16 +2,21 @@ package ryde;
 
 import dataStructures.Map;
 import dataStructures.MapWithJavaClass;
+import exception.InvalidTripDateException;
+import exception.TripHasRidesException;
+import exception.TwoTripsOnSameDayException;
 
 public class UserClass implements User {
 	Map<Date,Trip> rides;//boleias
 	Map<Date,Trip> trips;//deslocacoes
 	String email,password,nomeCompleto;
+	int visits;
 	
 	public UserClass(String email, String password, String nomeCompleto) {
 		this.email = email;
 		this.password = encrypt(password);
 		this.nomeCompleto = nomeCompleto;
+		this.visits = 0;
 		rides = new MapWithJavaClass<Date, Trip>();
 		trips = new MapWithJavaClass<Date, Trip>();
 	}
@@ -39,21 +44,31 @@ public class UserClass implements User {
 	}
 
 	@Override
-	public int addRide(Date date, Trip trip) {
+	public int addTrip(Date date, Trip trip) throws TwoTripsOnSameDayException {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public int addTrip(Date date, Trip trip) {
+	public int addRide(Date date, Trip trip) throws TwoTripsOnSameDayException{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
 
 	@Override
 	public String getEmail() {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public Trip removeTrip(Date date) throws TripHasRidesException, InvalidTripDateException{
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public int incNumberOfVisits() {return ++visits;}
 	
 }

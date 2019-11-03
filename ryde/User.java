@@ -1,5 +1,9 @@
 package ryde;
 
+import exception.InvalidTripDateException;
+import exception.TripHasRidesException;
+import exception.TwoTripsOnSameDayException;
+
 public interface User {
 	/**
 	 * Password verifier. The password sorted is encrypted and this method does what
@@ -7,33 +11,53 @@ public interface User {
 	 * valid.
 	 * 
 	 * @param pwd
-	 * @return
+	 * @return true if match
 	 */
 	boolean checkPassword(String pwd);
 
 	/**
-	 * Adds a new ride to the user. It adds this trip on the rides map and uses the
-	 * date as key
+	 * adds a new ride to this user if there's already another ride or trip
+	 * scheduled to this date it throws an exception.on success returns how many
+	 * rides this user has
 	 * 
 	 * @param date
 	 * @param trip
-	 * @return
+	 * @return number of trips
+	 * @throws TwoTripsOnSameDayException
 	 */
-	int addRide(Date date, Trip trip);
+	int addRide(Date date, Trip trip) throws TwoTripsOnSameDayException;
 
 	/**
-	 * Adds a new trip to the user. It adds this trip to the trips map and uses date
-	 * as key
+	 * adds a new trip to this user. if there's already another ride or trip
+	 * scheduled to this date it throws an exception. on success returns how many trips this user has
 	 * 
 	 * @param date
 	 * @param trip
 	 * @return
+	 * @throws TwoTripsOnSameDayException
 	 */
-	int addTrip(Date date, Trip trip);
-	
+	int addTrip(Date date, Trip trip) throws TwoTripsOnSameDayException;
+
 	/**
-	 * returns this user's  email
+	 * returns this user's email
+	 * 
 	 * @return
 	 */
 	String getEmail();
+	
+	/**
+	 * removes the trip this user has on this da. on succes returns the trip that was removed. If there is no trip on this date or the trip as already other users on the ride it throws an exception
+	 * @param date
+	 * @return
+	 * @throws TripHasRidesException
+	 * @throws InvalidTripDateException
+	 */
+	Trip removeTrip(Date date) throws TripHasRidesException, InvalidTripDateException;
+	
+	/**
+	 * increments  the number of visits from this user on the application. always succeeds
+	 * @return
+	 */
+	int incNumberOfVisits();
+
 }

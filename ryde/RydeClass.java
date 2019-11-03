@@ -55,19 +55,17 @@ public class RydeClass implements Ryde {
 		else
 			current = user;
 
-		return 0;
+		return current.incNumberOfVisits();
 	}
 
 	@Override
 	public int addTrip(String start, String end, Date date, int duration, int seats) throws TwoTripsOnSameDayException {
-
-		return 0;
+		return current.addTrip(date, new TripClass(current, start, end, date, duration, seats));
 	}
 
 	@Override
 	public Trip removeTrip(Date date) throws TripHasRidesException, InvalidTripDateException {
-		// TODO Auto-generated method stub
-		return null;
+		return current.removeTrip(date);
 	}
 
 	@Override
