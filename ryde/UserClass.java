@@ -7,4 +7,10 @@ public class UserClass implements User {
 	Map<String,Trip> trips;//deslocacoes
 	String email,passowrd,nomeCompleto;
 	
+	@Override
+	public boolean checkPassword(String pwd) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
 }
