@@ -122,4 +122,11 @@ public interface Ryde {
 	 * @return true if user exists, false if not
 	 */
 	boolean hasUser(String email);
+
+	/**
+	 * Returns the currently logged in user
+	 * 
+	 * @return current user
+	 */
+	User getCurrentUser();
 }

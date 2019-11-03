@@ -62,10 +62,11 @@ public class Date implements Comparable<Date> {
 	}
 
 	/**
-	 * if the date parameter is more recent than this it returns a value less than zero. if this is more
-	 * recent than parameter returns greater than 0. if they are equal return 0
+	 * if the date parameter is more recent than this it returns a value less than
+	 * zero. if this is more recent than parameter returns greater than 0. if they
+	 * are equal return 0
 	 * 
-	 * this.compareTo(parameter) this>parameter = 1; parameter>this = -1 
+	 * this.compareTo(parameter) this>parameter = 1; parameter>this = -1
 	 */
 	@Override
 	public int compareTo(Date o) {

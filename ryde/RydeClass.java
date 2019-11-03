@@ -5,30 +5,35 @@ import dataStructures.MapWithJavaClass;
 import exception.*;
 
 public class RydeClass implements Ryde {
-	
+
 	Map<String, Map<String, Trip>> ridesByDate;
 	Map<String, User> users;
 	User current;
-	
+
 	public RydeClass() {
 		this.ridesByDate = new MapWithJavaClass<String, Map<String, Trip>>();
 		this.users = new MapWithJavaClass<String, User>();
 		this.current = null;
 	}
-	
+
 	@Override
 	public boolean hasUser(String email) {
 		return users.find(email) != null;
 	}
 
 	@Override
-	public int addUser(String email, String nome, String password){
-		
+	public int addUser(String email, String nome, String password) {
+
 		User user = new UserClass(email, password, nome);
-		
+
 		users.insert(email, user);
-		
+
 		return users.size();
+	}
+	
+	@Override
+	public User getCurrentUser() {
+		return current;
 	}
 
 	@Override

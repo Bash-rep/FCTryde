@@ -10,36 +10,36 @@ public class TripClass implements Trip {
 	Date date;
 	int duration;
 	int seats;
-	
+
 	public TripClass(User owner, String start, String end, Date date, int duration, int seats) {
 		this.owner = owner;
 		this.start = start;
 		this.end = end;
-		this.date= date;
+		this.date = date;
 		this.duration = duration;
 		this.seats = seats;
 		inCar = new MapWithJavaClass<>();
 		queue = new QueueInArray<>();
 	}
-	
+
 	public User queue(User user) {
 		queue.enqueue(user);
 		return user;
 	}
-	
+
 	public User cancelRide(User user) {
-		
+
 		return owner;
 	}
-	
+
 	@Override
 	public int inQueue() {
 		return queue.size();
 	}
-	
+
 	@Override
 	public int freeSeats() {
-		return seats-inCar.size();
+		return seats - inCar.size();
 	}
 
 	@Override
