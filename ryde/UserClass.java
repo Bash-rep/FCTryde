@@ -67,8 +67,7 @@ public class UserClass implements User {
 
 	@Override
 	public String getEmail() {
-		// TODO Auto-generated method stub
-		return null;
+		return email;
 	}
 
 	
