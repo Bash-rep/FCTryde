@@ -8,7 +8,6 @@ import exception.NoLogInException;
 import exception.NoSuchUserException;
 import exception.TripHasRidesException;
 import exception.TwoTripsOnSameDayException;
-import exception.UserAlreadyExistsException;
 
 public interface Ryde {
 	/**
@@ -21,7 +20,7 @@ public interface Ryde {
 	 * @return the number of users registered
 	 * @throws UserAlreadyExistsException
 	 */
-	int addUser(String email, String nome, String password) throws UserAlreadyExistsException;
+	int addUser(String email, String nome, String password);
 
 	/**
 	 * Logs the current user out and returns it. If there is no one logged id it
