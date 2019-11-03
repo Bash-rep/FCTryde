@@ -10,4 +10,15 @@ public interface User {
 	 * @return
 	 */
 	boolean checkPassword(String pwd);
+
+	/**
+	 * Adds a new ride to the user. It adds this trip on the rides map and uses the
+	 * date as key
+	 * 
+	 * @param date
+	 * @param trip
+	 * @return
+	 */
+	int addRide(Date date, Trip trip);
+
 }
