@@ -1,15 +1,17 @@
 import java.util.Scanner;
 
+import exception.InvalidPasswordException;
+import exception.MultipleLogInException;
+import exception.NoSuchUserException;
 import ryde.*;
 
 public class Main {
 
-	
 	// cts que definem os comandos
 	private static final String EXIT = "termina";
-	private static final String SWITCH_USER = "sai";
+	private static final String LOGOUT = "sai";
 	private static final String LIST = "lista";
-	private static final String REGIST = "regista";
+	private static final String SIGNUP = "regista";
 	private static final String LOGIN = "entrada";
 	private static final String HELP = "ajuda";
 	private static final String NEW_TRIP = "nova";
@@ -20,20 +22,27 @@ public class Main {
 
 	// cts que definem as mensagens
 	private static final String INVALID_CMD = "Comando invalido.";
-	private static final String REGIST_FAIL = "Registo nao realizado.";
+	private static final String SIGNUP_FAIL = "Registo nao realizado.";
 	private static final String UTILIZADOR_JA_EXISTENTE = "Utilizador ja existente.";
+	private static final String VALID_NAME = "nome (maximo 50 caracteres): ";
+	private static final String VALID_PWD = "password (entre 4 e 6 caracteres - digitos e letras): ";
+	private static final String SIGNUP_SUCCESS = "Registo %d efetuado.\n";
+	private static final String FAREWELL = "Ate a proxima %s.\n";
+	private static final String NO_SUCH_USER = "Utilizador nao existente.\n";
+	private static final String SUCCESSFUL_LOGIN = "Visita %d efetuada.\n";
+	
 
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
 		String cmd = " ";
-		Ryde ride = new RydeClass();
+		Ryde ryde = new RydeClass();
 		while (!cmd.equalsIgnoreCase(EXIT)) {
 			cmd = readCmd(in);
 			switch (cmd) {
 			case LIST:break;
-			case REGIST:processRegist(in, ride);break;
-			case SWITCH_USER:break;
-			case LOGIN:break;
+			case SIGNUP:signup(in, ryde);break;
+			case LOGOUT:logout(ryde);break;
+			case LOGIN:login(in, ryde);break;
 			case HELP:break;
 			case NEW_TRIP:break;
 			case REMOVE_TRIP:break;
@@ -48,22 +57,22 @@ public class Main {
 		}
 	}
 
-	private static void processRegist(Scanner in, Ryde ride) {
+	private static void signup(Scanner in, Ryde ryde) {
 		int i = 0;
 		String email, name = "", pwd = "";
 		
 		email = in.nextLine();
-		if (ride.hasUser(email))
+		if (ryde.hasUser(email))
 			System.out.println(UTILIZADOR_JA_EXISTENTE);
-		else if(ride.getCurrentUser() != null) {
+		else if(ryde.getCurrentUser() != null) {
 			System.out.println(INVALID_CMD);
 		}
 		else {
-			System.out.print("nome (maximo 50 caracteres): ");
+			System.out.print(VALID_NAME);
 			name = in.nextLine().trim();
 
 			while (i > -1 && i < 3) {
-				System.out.print("password (entre 4 e 6 caracteres - digitos e letras): ");
+				System.out.print(VALID_PWD);
 				pwd = in.nextLine();
 				if (isValid(pwd)) {
 					i = -2;
@@ -71,9 +80,32 @@ public class Main {
 				i++;
 			}
 			if (i > 0) {
-				System.out.println(REGIST_FAIL);
+				System.out.println(SIGNUP_FAIL);
 			} else {
-				System.out.printf("Registo %d efetuado.\n",ride.addUser(email, name, pwd));
+				System.out.printf(SIGNUP_SUCCESS,ryde.addUser(email, name, pwd));
+			}
+		}
+	}
+	
+	private static void logout(Ryde ryde) {
+		if (ryde.getCurrentUser() == null)
+			System.out.println(INVALID_CMD);
+		else
+			System.out.printf(FAREWELL, ryde.logOut());
+	}
+	
+	private static void login(Scanner in, Ryde ryde) {
+		String email = in.nextLine();
+		
+		if (!ryde.hasUser(email))
+			System.out.println(NO_SUCH_USER);
+		else {
+			String pwd = in.nextLine();
+			
+			try {
+				System.out.printf(SUCCESSFUL_LOGIN, ryde.logIn(email, pwd));
+			} catch (InvalidPasswordException | MultipleLogInException | NoSuchUserException e) {
+				e.printStackTrace();
 			}
 		}
 	}
