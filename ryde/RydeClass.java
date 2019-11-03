@@ -42,12 +42,9 @@ public class RydeClass implements Ryde {
 
 	@Override
 	public int logIn(String email, String pwd)
-			throws InvalidPasswordException, MultipleLogInException, NoSuchUserException {
+			throws InvalidPasswordException, NoSuchUserException {
 		User user;
-
-		if (current != null)
-			throw new MultipleLogInException();
-		else if (!hasUser(email))
+		if (!hasUser(email))
 			throw new NoSuchUserException();
 		else if (!(user = users.find(email)).checkPassword(pwd))
 			throw new InvalidPasswordException();
