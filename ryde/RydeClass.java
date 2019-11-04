@@ -20,7 +20,7 @@ public class RydeClass implements Ryde {
 	
 	@Override
 	public String logOut() {
-		String prevLoggedEmail = current.getEmail();
+		String prevLoggedEmail = current.getName();
 		
 		current = null;
 		
@@ -88,6 +88,11 @@ public class RydeClass implements Ryde {
 	@Override
 	public boolean hasUser(String email) {
 		return users.find(email) != null;
+	}
+
+	@Override
+	public String getCurrentUserName() {
+		return current.getName();
 	}
 
 

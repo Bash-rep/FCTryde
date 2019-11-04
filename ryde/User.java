@@ -60,4 +60,6 @@ public interface User {
 	 */
 	int incNumberOfVisits();
 
+	String getName();
+
 }

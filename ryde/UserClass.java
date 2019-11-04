@@ -74,4 +74,6 @@ public class UserClass implements User {
 	@Override
 	public int incNumberOfVisits() {return ++visits;}
 	
+	@Override
+	public String getName() {return nomeCompleto;}
 }

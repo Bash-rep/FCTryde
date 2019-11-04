@@ -127,4 +127,6 @@ public interface Ryde {
 	 * @return current user
 	 */
 	String getCurrentUserEmail();
+
+	String getCurrentUserName();
 }

@@ -76,5 +76,9 @@ public class Date implements Comparable<Date> {
 				aux = this.getDay() - o.getDay();
 		return aux;
 	}
+	
+	public String toString() {
+		return day+"-"+month+"-"+year+" "+hour+":"+minute;
+	}
 
 }
