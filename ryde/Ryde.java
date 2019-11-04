@@ -2,7 +2,7 @@ package ryde;
 
 import java.io.Serializable;
 
-import exception.DuplicateUserException;
+import exception.CannotCatchOwnRideException;
 import exception.InvalidPasswordException;
 import exception.InvalidTripDateException;
 
@@ -55,8 +55,7 @@ public interface Ryde extends Serializable {
 	 * @throws NoLogInException
 	 * @throws TwoTripsOnSameDayException
 	 */
-	int addTrip(String start, String end, Date date, int duration, int seats)
-			throws  TwoTripsOnSameDayException;
+	int addTrip(String start, String end, Date date, int duration, int seats) throws TwoTripsOnSameDayException;
 
 	/**
 	 * removes a trip on this given date from the logged in user. if there is rides
@@ -70,7 +69,7 @@ public interface Ryde extends Serializable {
 	 * @throws NoLogInException
 	 * @throws InvalidTripDateException
 	 */
-	Trip removeTrip(Date date) throws TripHasRidesException , InvalidTripDateException;
+	Trip removeTrip(Date date) throws TripHasRidesException, InvalidTripDateException;
 
 	/**
 	 * Adds a new ride to the user who is logged in (who cannot have a trip or ride
@@ -83,9 +82,9 @@ public interface Ryde extends Serializable {
 	 * @throws NoLogInException
 	 * @throws NoSuchUserException
 	 * @throws InvalidTripDateException
+	 * @throws CannotCatchOwnRideException
 	 */
-	int addRide(String driver, Date date) throws DuplicateUserException,
-			InvalidTripDateException, TwoTripsOnSameDayException;
+	int addRide(String driver, Date date) throws InvalidTripDateException, TwoTripsOnSameDayException, CannotCatchOwnRideException;
 
 	/**
 	 * Removes the ride the logged in user registered for the specified date.
@@ -98,7 +97,7 @@ public interface Ryde extends Serializable {
 	 * @throws NoLogInException
 	 * @throws InvalidTripDateException
 	 */
-	String removeRide(Date date) throws  InvalidTripDateException;
+	String removeRide(Date date) throws InvalidTripDateException;
 
 	/**
 	 * Gets the information about the trip happening on this date from this user. It

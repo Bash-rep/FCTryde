@@ -7,3 +7,4 @@
 /TripHasRidesException.class
 /TwoTripsOnSameDayException.class
 /UserAlreadyExistsException.class
+/CannotCatchOwnRideException.class

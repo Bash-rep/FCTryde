@@ -6,6 +6,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Scanner;
 
+import exception.CannotCatchOwnRideException;
 import exception.InvalidPasswordException;
 import exception.InvalidTripDateException;
 import exception.TripHasRidesException;
@@ -39,10 +40,17 @@ public class Main {
 	private static final String NO_SUCH_USER = "Utilizador nao existente.";
 	private static final String SUCCESSFUL_LOGIN = "Visita %d efetuada.\n";
 	private static final String TWO_TRIPS_SAME_DAY = "%s ja tem uma deslocacao ou boleia nesta data.\n";
-	private static final String INVALID_DATA = "Dados invalidos.\n";
+	private static final String INVALID_DATA = "Dados invalidos.";
 	private static final String NO_SUCH_TRIP = "%s nesta data nao tem registo de deslocacao.\n";
 	private static final String CANNOT_REMOVE_TRIP = "%s ja nao pode eliminar esta deslocacao.";
 	private static final String REMOVE_TRIP_SUCCESS = "Deslocacao removida.";
+	private static final String CANNOT_CATCH_OWN_RIDE = "%s nao pode dar boleia a si proprio.\n";
+	private static final String TRIP_OR_RIDE_ON_SAME_DAY = "%s ja registou uma boleia ou deslocacao nesta data.\n";
+	private static final String INVALID_TRIP_DATE = "Deslocacao nao existe.";
+	private static final String IN_QUEUE = "Ficou na fila de espera (posicao %d)\n";
+	private static final String NEW_RIDE_SUCCESS = "Boleia registada.";
+	private static final String NO_SUCH_USER_2 = "Utilizador inexistente.";
+	private static final String INVALID_DATE = "Data invalida.";
 
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
@@ -80,9 +88,11 @@ public class Main {
 			case REMOVE_TRIP:
 				processRemoveTrip(in, ryde);
 				break;
-			case REMOVE_RIDE:
-				break;
 			case NEW_RIDE:
+				processNewRide(in, ryde);
+				break;
+			case REMOVE_RIDE:
+				processRemoveRide(in, ryde);
 				break;
 			case CONSULT:
 				break;
@@ -184,8 +194,9 @@ public class Main {
 
 	private static void processNewTrip(Scanner in, Ryde ryde) {
 		in.nextLine();
-		if (ryde.getCurrentUserEmail() == null)
+		if (ryde.getCurrentUserEmail() == null) {
 			System.out.println(INVALID_CMD);
+		}
 		else {
 			String start = in.nextLine().trim();
 			String end = in.nextLine().trim();
@@ -233,15 +244,54 @@ public class Main {
 			}
 		}
 	}
+
+	private static void processNewRide(Scanner in, Ryde ryde) {
+		
+		if (ryde.getCurrentUserEmail() == null) {
+			System.out.println(INVALID_CMD);
+		} else {
+			String email = in.next().trim();
+			String dateStr = in.nextLine().trim();
+			
+			String[] splitDate = dateStr.split("-");
+			Date date = new Date(Integer.parseInt(splitDate[2]), Integer.parseInt(splitDate[1]),
+					Integer.parseInt(splitDate[0]), 0, 0);
+			if (!ryde.hasUser(email)) {
+				System.out.println(NO_SUCH_USER_2);
+			} else if(!dateIsValid(date)) {
+				System.out.println(INVALID_DATE);
+			} else {
+				try {
+					int queuePos = ryde.addRide(email, date);
+					if (queuePos > 0) {
+						System.out.printf(IN_QUEUE, queuePos);
+					} else {
+						System.out.println(NEW_RIDE_SUCCESS);
+					}
+				} catch (InvalidTripDateException e) {
+					System.out.println(INVALID_TRIP_DATE);
+				} catch (CannotCatchOwnRideException e) {
+					System.out.printf(CANNOT_CATCH_OWN_RIDE, email);
+				} catch (TwoTripsOnSameDayException e) {
+					System.out.printf(TRIP_OR_RIDE_ON_SAME_DAY, ryde.getCurrentUserName());
+				}
+			}
+		}
+	}
 	
+	private static void processRemoveRide(Scanner in, Ryde ryde) {
+		//TODO
+	}
+
 	private static boolean dateIsValid(Date date) {
 		int year = date.getYear();
 		int month = date.getMonth();
 		int day = date.getDay();
 		int hour = date.getHour();
 		int minute = date.getMinute();
-		
-		if (year < 0 || month < 1 || month > 12 || day < 1 || day > 31) {
+
+		if (year < 0 || month < 1 || month > 12 || day < 1 || day > 31 || hour < 0 || hour > 23 || minute < 0
+				|| minute > 59) {
 			return false;
 		}
 		if ((month == 4 || month == 6 || month == 9 || month == 11) && day > 30) {
@@ -252,16 +302,12 @@ public class Main {
 				return false;
 			}
 			if (day > 28) {
-				if (year%4 != 0) {
-					return false;
-				} else if (year%100 == 0 && year%400 != 0) {
+				if ((year % 4 != 0) || year % 100 == 0 && year % 400 != 0) {
 					return false;
 				}
 			}
 		}
-		if (hour < 0 || hour > 23 || minute < 0 || minute > 59) {
-			return false;
-		}
+
 		return true;
 	}
 

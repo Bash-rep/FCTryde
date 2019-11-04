@@ -1,13 +1,13 @@
 package exception;
 
-public class InvalidPasswordException extends Exception {
+public class CannotCatchOwnRideException extends Exception {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public InvalidPasswordException() {
+	public CannotCatchOwnRideException() {
 		super();
 	}
 
