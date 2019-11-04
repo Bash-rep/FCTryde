@@ -39,6 +39,7 @@ public class Main {
 	private static final String NO_SUCH_USER = "Utilizador nao existente.";
 	private static final String SUCCESSFUL_LOGIN = "Visita %d efetuada.\n";
 	private static final String TWO_TRIPS_SAME_DAY = "%s ja tem uma deslocacao ou boleia nesta data.\n";
+	private static final String INVALID_DATA = "Dados invalidos.\n";
 
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
@@ -132,7 +133,7 @@ public class Main {
 			pwdcheck: for (i = 0; i < 3; i++) {
 				System.out.print(VALID_PWD);
 				pwd = in.nextLine();
-				if (isValid(pwd)) {
+				if (pwdIsValid(pwd)) {
 					break pwdcheck;
 				}
 			}
@@ -200,12 +201,15 @@ public class Main {
 			Date date = new Date(Integer.parseInt(splitDate[2]), Integer.parseInt(splitDate[1]),
 					Integer.parseInt(splitDate[0]), Integer.parseInt(splitTime[0]), Integer.parseInt(splitTime[1]));
 
-			try {
-				// TODO date might be invalid
-				System.out.printf(NEW_TRIP_SUCCESS, ryde.addTrip(start, end, date, duration, seats),
-						ryde.getCurrentUserName());
-			} catch (TwoTripsOnSameDayException e) {
-				System.out.printf(TWO_TRIPS_SAME_DAY, ryde.getCurrentUserName());
+			if (!dateIsValid(date) || Integer.parseInt(time) < 1 || seats < 0) {
+				System.out.println(INVALID_DATA);
+			} else {
+				try {
+					System.out.printf(NEW_TRIP_SUCCESS, ryde.addTrip(start, end, date, duration, seats),
+							ryde.getCurrentUserName());
+				} catch (TwoTripsOnSameDayException e) {
+					System.out.printf(TWO_TRIPS_SAME_DAY, ryde.getCurrentUserName());
+				}
 			}
 		}
 	}
@@ -228,8 +232,39 @@ public class Main {
 			}
 		}
 	}
+	
+	private static boolean dateIsValid(Date date) {
+		int year = date.getYear();
+		int month = date.getMonth();
+		int day = date.getDay();
+		int hour = date.getHour();
+		int minute = date.getMinute();
+		
+		if (year < 0 || month < 1 || month > 12 || day < 1 || day > 31) {
+			return false;
+		}
+		if ((month == 4 || month == 6 || month == 9 || month == 11) && day > 30) {
+			return false;
+		}
+		if (month == 2) {
+			if (day > 29) {
+				return false;
+			}
+			if (day > 28) {
+				if (year%4 != 0) {
+					return false;
+				} else if (year%100 == 0 && year%400 != 0) {
+					return false;
+				}
+			}
+		}
+		if (hour < 0 || hour > 23 || minute < 0 || minute > 59) {
+			return false;
+		}
+		return true;
+	}
 
-	private static boolean isValid(String pwd) {
+	private static boolean pwdIsValid(String pwd) {
 		if (pwd.toCharArray().length > 3 && pwd.toCharArray().length < 7 && pwd.chars().anyMatch(Character::isLetter)
 				&& pwd.chars().anyMatch(Character::isDigit) && pwd.chars().allMatch(Character::isLetterOrDigit)) {
 			return true;
