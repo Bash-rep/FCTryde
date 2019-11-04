@@ -40,6 +40,9 @@ public class Main {
 	private static final String SUCCESSFUL_LOGIN = "Visita %d efetuada.\n";
 	private static final String TWO_TRIPS_SAME_DAY = "%s ja tem uma deslocacao ou boleia nesta data.\n";
 	private static final String INVALID_DATA = "Dados invalidos.\n";
+	private static final String NO_SUCH_TRIP = "%s nesta data nao tem registo de deslocacao.\n";
+	private static final String CANNOT_REMOVE_TRIP = "%s ja nao pode eliminar esta deslocacao.";
+	private static final String REMOVE_TRIP_SUCCESS = "Deslocacao removida.";
 
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
@@ -222,10 +225,11 @@ public class Main {
 					Integer.parseInt(splitDate[0]), 0, 0);
 			try {
 				ryde.removeTrip(date);
+				System.out.println(REMOVE_TRIP_SUCCESS);
 			} catch (TripHasRidesException e) {
-				System.out.printf("%s ja nao pode eliminar esta deslocacao.", ryde.getCurrentUserName());
+				System.out.printf(CANNOT_REMOVE_TRIP, ryde.getCurrentUserName());
 			} catch (InvalidTripDateException e) {
-				System.out.printf("%s nesta data nao tem registo de deslocacao.\n", ryde.getCurrentUserName());
+				System.out.printf(NO_SUCH_TRIP, ryde.getCurrentUserName());
 			}
 		}
 	}
