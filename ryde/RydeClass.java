@@ -68,8 +68,16 @@ public class RydeClass implements Ryde {
 	@Override
 	public int addRide(String driver, Date date)
 			throws DuplicateUserException, InvalidTripDateException, TwoTripsOnSameDayException {
-		// TODO Auto-generated method stub
-		return 0;
+		User owner = users.find(driver);
+		
+		Trip trip = owner.getTrip(date);
+		
+		int inQueue; 
+		if((inQueue = trip.add(current))>0) {
+			return inQueue;
+		}
+
+		return current.addRide(date, trip);
 	}
 
 	@Override

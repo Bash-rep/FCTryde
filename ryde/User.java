@@ -61,7 +61,19 @@ public interface User extends Serializable {
 	 * @return
 	 */
 	int incNumberOfVisits();
-
+	
+	/**
+	 * gets this user name
+	 * @return
+	 */
 	String getName();
+	
+	/**
+	 * gets a trip this user has on this date
+	 * @param date
+	 * @return trip on given date
+	 * @throws InvalidTripDateException
+	 */
+	Trip getTrip(Date date) throws InvalidTripDateException;
 
 }

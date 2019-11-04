@@ -27,15 +27,6 @@ public class TripClass implements Trip {
 		queue = new QueueInArray<>();
 	}
 
-	public User queue(User user) {
-		queue.enqueue(user);
-		return user;
-	}
-
-	public User cancelRide(User user) {
-		return owner;
-	}
-
 	@Override
 	public int inQueue() {
 		return queue.size();
@@ -74,5 +65,22 @@ public class TripClass implements Trip {
 	@Override
 	public User getOwner() {
 		return owner;
+	}
+
+	@Override
+	public int add(User current) {
+		if (inCar.find(current.getEmail()) != null) {
+			System.out.println("ERRO: Isto nao pode acontecer (TripClass)");
+		}
+		return allocateUser(current);
+	}
+
+	private int allocateUser(User current) {
+		if(freeSeats()>0) {
+			inCar.insert(current.getEmail(), current);
+			return 0;
+		}
+		queue.enqueue(current);
+		return inQueue();
 	}
 }

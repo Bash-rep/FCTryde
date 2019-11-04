@@ -52,5 +52,12 @@ public interface Trip extends Serializable {
 	 */
 	int takenSeats();
 	
+	/**
+	 * adds a new user to this ride. if the car is already full the user goes to a queue
+	 * @param current
+	 * @return the queue size
+	 */
+	int add(User current);
+	
 	
 }
