@@ -244,7 +244,7 @@ public class Main {
 	private static Ryde load() {
 
 		try {
-			ObjectInputStream file = new ObjectInputStream(new FileInputStream("rdye.ser"));
+			ObjectInputStream file = new ObjectInputStream(new FileInputStream("persistence.ser"));
 			Ryde ryde = (Ryde) file.readObject();
 			file.close();
 			return ryde;
