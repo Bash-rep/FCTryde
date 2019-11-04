@@ -136,11 +136,12 @@ public class Main {
 					break pwdcheck;
 				}
 			}
-		}
-		if (i > 0) {
-			System.out.println(SIGNUP_FAIL);
-		} else {
-			System.out.printf(SIGNUP_SUCCESS, ryde.addUser(email, name, pwd));
+			
+			if (i > 0) {
+				System.out.println(SIGNUP_FAIL);
+			} else {
+				System.out.printf(SIGNUP_SUCCESS, ryde.addUser(email, name, pwd));
+			}
 		}
 	}
 
