@@ -3,11 +3,13 @@
  */
 package dataStructures;
 
+import java.io.Serializable;
+
 /**
  * @author AED_19_20
  *
  */
-public interface Iterator<E> {
+public interface Iterator<E> extends Serializable {
 
 	// Returns true iff the iteration has more elements.
 	// In other words, returns true if next would return an element.

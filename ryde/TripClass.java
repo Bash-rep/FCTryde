@@ -3,6 +3,11 @@ package ryde;
 import dataStructures.*;
 
 public class TripClass implements Trip {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	Queue<User> queue;
 	Map<String, User> inCar;
 	User owner;

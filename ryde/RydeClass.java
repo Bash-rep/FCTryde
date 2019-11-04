@@ -6,6 +6,11 @@ import exception.*;
 
 public class RydeClass implements Ryde {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	Map<String, Map<String, Trip>> ridesByDate;
 	Map<String, User> users;
 	User current;

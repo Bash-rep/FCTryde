@@ -1,3 +1,9 @@
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Scanner;
 
 import exception.InvalidPasswordException;
@@ -37,7 +43,16 @@ public class Main {
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
 		String cmd = " ";
-		Ryde ryde = new RydeClass();
+		Ryde ryde;
+
+		File persistence = new File("ryde.ser");
+
+		if (!persistence.exists()) {
+			ryde = new RydeClass();
+		} else {
+			ryde = load();
+		}
+
 		mainCycle: while (true != false) {
 			printPrompt(ryde);
 			cmd = readCmd(in);
@@ -76,6 +91,8 @@ public class Main {
 				System.out.println(INVALID_CMD);
 			}
 		}
+
+		store(ryde);
 	}
 
 	private static boolean processExit(Ryde ryde) {
@@ -183,7 +200,7 @@ public class Main {
 					Integer.parseInt(splitDate[0]), Integer.parseInt(splitTime[0]), Integer.parseInt(splitTime[1]));
 
 			try {
-				//TODO date might be invalid
+				// TODO date might be invalid
 				System.out.printf(NEW_TRIP_SUCCESS, ryde.addTrip(start, end, date, duration, seats),
 						ryde.getCurrentUserName());
 			} catch (TwoTripsOnSameDayException e) {
@@ -204,9 +221,9 @@ public class Main {
 			try {
 				ryde.removeTrip(date);
 			} catch (TripHasRidesException e) {
-				System.out.printf("%s ja nao pode eliminar esta deslocacao.",ryde.getCurrentUserName());
+				System.out.printf("%s ja nao pode eliminar esta deslocacao.", ryde.getCurrentUserName());
 			} catch (InvalidTripDateException e) {
-				System.out.printf("%s nesta data nao tem registo de deslocacao.\n",ryde.getCurrentUserName());
+				System.out.printf("%s nesta data nao tem registo de deslocacao.\n", ryde.getCurrentUserName());
 			}
 		}
 	}
@@ -222,6 +239,33 @@ public class Main {
 	private static String readCmd(Scanner in) {
 		String cmd = in.next().trim().toLowerCase();
 		return cmd;
+	}
+
+	private static Ryde load() {
+
+		try {
+			ObjectInputStream file = new ObjectInputStream(new FileInputStream("rdye.ser"));
+			Ryde ryde = (Ryde) file.readObject();
+			file.close();
+			return ryde;
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	private static void store(Ryde ryde) {
+
+		try {
+			ObjectOutputStream file = new ObjectOutputStream(new FileOutputStream("persistence.ser"));
+			file.writeObject(ryde);
+			file.flush();
+			file.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

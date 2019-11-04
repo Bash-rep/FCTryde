@@ -1,7 +1,12 @@
 package dataStructures;
 
-public class ValuesIterator<K,V> implements Iterator<V>{
+public class ValuesIterator<K, V> implements Iterator<V> {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private Iterator<Entry<K, V>> iterator;
 
 	public ValuesIterator(Iterator<Entry<K, V>> iterator) {

@@ -1,6 +1,13 @@
 package ryde;
 
-public class Date implements Comparable<Date> {
+import java.io.Serializable;
+
+public class Date implements Comparable<Date>, Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	int year, month, day, hour, minute;
 
 	public Date(int year, int month, int day, int hour, int minute) {

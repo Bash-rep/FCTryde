@@ -1,6 +1,8 @@
 package dataStructures;
 
-public interface TwoWayIterator<E> extends Iterator<E> {
+import java.io.Serializable;
+
+public interface TwoWayIterator<E> extends Iterator<E>, Serializable {
 	
 	// Returns true iff the iteration has more elements in the reverse direction.
 	// In other words, returns true if previous would return an element.

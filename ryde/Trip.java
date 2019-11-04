@@ -1,6 +1,8 @@
 package ryde;
 
-public interface Trip {	
+import java.io.Serializable;
+
+public interface Trip extends Serializable {	
 
 	/**
 	 * returns the person who created this trip

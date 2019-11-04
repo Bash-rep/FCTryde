@@ -7,6 +7,11 @@ import exception.TripHasRidesException;
 import exception.TwoTripsOnSameDayException;
 
 public class UserClass implements User {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	Map<Date,Trip> rides;//boleias
 	Map<Date,Trip> trips;//deslocacoes
 	String email,password,nomeCompleto;

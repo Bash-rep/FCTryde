@@ -1,5 +1,7 @@
 package ryde;
 
+import java.io.Serializable;
+
 import exception.DuplicateUserException;
 import exception.InvalidPasswordException;
 import exception.InvalidTripDateException;
@@ -7,7 +9,7 @@ import exception.InvalidTripDateException;
 import exception.TripHasRidesException;
 import exception.TwoTripsOnSameDayException;
 
-public interface Ryde {
+public interface Ryde extends Serializable {
 	/**
 	 * Adds a new user to the database and returns the number of registered users at
 	 * the moment. If there's one already with that email it throws an exception

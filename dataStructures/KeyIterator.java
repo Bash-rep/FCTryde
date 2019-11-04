@@ -1,6 +1,11 @@
 package dataStructures;
 
-public class KeyIterator<K, V> implements Iterator<K>{
+public class KeyIterator<K, V> implements Iterator<K> {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private Iterator<Entry<K, V>> iterator;
 
 	public KeyIterator(Iterator<Entry<K, V>> iterator) {

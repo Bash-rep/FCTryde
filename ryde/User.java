@@ -1,10 +1,12 @@
 package ryde;
 
+import java.io.Serializable;
+
 import exception.InvalidTripDateException;
 import exception.TripHasRidesException;
 import exception.TwoTripsOnSameDayException;
 
-public interface User {
+public interface User extends Serializable {
 	/**
 	 * Password verifier. The password sorted is encrypted and this method does what
 	 * is needed to check if the password is valid. Returns true if the password is
