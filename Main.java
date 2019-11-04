@@ -198,7 +198,7 @@ public class Main {
 			Date date = new Date(Integer.parseInt(splitDate[2]), Integer.parseInt(splitDate[1]),
 					Integer.parseInt(splitDate[0]), Integer.parseInt(splitTime[0]), Integer.parseInt(splitTime[1]));
 
-			if (!dateIsValid(date) || Integer.parseInt(time) < 1 || seats < 0) {
+			if (!dateIsValid(date) || duration < 1 || seats < 0 || seats > 10) {
 				System.out.println(INVALID_DATA);
 			} else {
 				try {
