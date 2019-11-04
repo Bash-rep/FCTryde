@@ -45,7 +45,7 @@ public class Main {
 		String cmd = " ";
 		Ryde ryde;
 
-		File persistence = new File("ryde.ser");
+		File persistence = new File("persistence.ser");
 
 		if (!persistence.exists()) {
 			ryde = new RydeClass();
