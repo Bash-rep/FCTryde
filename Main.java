@@ -130,20 +130,16 @@ public class Main {
 
 			name = in.nextLine().trim();
 
-			pwdcheck: for (i = 0; i < 3; i++) {
+			for (i = 0; i < 3; i++) {
 				System.out.print(VALID_PWD);
 				pwd = in.nextLine();
 				if (pwdIsValid(pwd)) {
-					i=-1;
-					break pwdcheck;
+					System.out.printf(SIGNUP_SUCCESS, ryde.addUser(email, name, pwd));
+					return;
 				}
 			}
-			
-			if (i > 0) {
-				System.out.println(SIGNUP_FAIL);
-			} else {
-				System.out.printf(SIGNUP_SUCCESS, ryde.addUser(email, name, pwd));
-			}
+			System.out.println(SIGNUP_FAIL);
+
 		}
 	}
 
