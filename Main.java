@@ -1,12 +1,13 @@
 import java.util.Scanner;
 
 import exception.InvalidPasswordException;
+import exception.InvalidTripDateException;
+import exception.TripHasRidesException;
 import exception.TwoTripsOnSameDayException;
 import ryde.*;
 
 public class Main {
 
-	
 	// cts que definem os comandos
 	private static final String EXIT = "termina";
 	private static final String LOGOUT = "sai";
@@ -37,7 +38,7 @@ public class Main {
 		Scanner in = new Scanner(System.in);
 		String cmd = " ";
 		Ryde ryde = new RydeClass();
-		mainCycle:while (true!=false) {
+		mainCycle: while (true != false) {
 			printPrompt(ryde);
 			cmd = readCmd(in);
 			switch (cmd) {
@@ -58,6 +59,7 @@ public class Main {
 				processNewTrip(in, ryde);
 				break;
 			case REMOVE_TRIP:
+				processRemoveTrip(in, ryde);
 				break;
 			case REMOVE_RIDE:
 				break;
@@ -66,7 +68,8 @@ public class Main {
 			case CONSULT:
 				break;
 			case EXIT:
-				if(processExit(ryde))break mainCycle;
+				if (processExit(ryde))
+					break mainCycle;
 				break;
 			default:
 				in.nextLine();
@@ -180,6 +183,7 @@ public class Main {
 					Integer.parseInt(splitDate[0]), Integer.parseInt(splitTime[0]), Integer.parseInt(splitTime[1]));
 
 			try {
+				//TODO date might be invalid
 				System.out.printf(NEW_TRIP_SUCCESS, ryde.addTrip(start, end, date, duration, seats),
 						ryde.getCurrentUserName());
 			} catch (TwoTripsOnSameDayException e) {
@@ -188,15 +192,23 @@ public class Main {
 		}
 	}
 
-	private static void removeTrip(Scanner in, Ryde ryde) {
-		String dateStr = in.next().trim();
-		String time = in.nextLine();
-
-		String[] splitDate = dateStr.split("-");
-		String[] splitTime = time.split(":");
-
-		Date date = new Date(Integer.parseInt(splitDate[2]), Integer.parseInt(splitDate[1]),
-				Integer.parseInt(splitDate[0]), Integer.parseInt(splitTime[0]), Integer.parseInt(splitTime[1]));
+	private static void processRemoveTrip(Scanner in, Ryde ryde) {
+		if (ryde.getCurrentUserEmail() == null) {
+			System.out.println(INVALID_CMD);
+		} else {
+			String dateStr = in.next().trim();
+			in.nextLine();
+			String[] splitDate = dateStr.split("-");
+			Date date = new Date(Integer.parseInt(splitDate[2]), Integer.parseInt(splitDate[1]),
+					Integer.parseInt(splitDate[0]), 0, 0);
+			try {
+				ryde.removeTrip(date);
+			} catch (TripHasRidesException e) {
+				System.out.printf("%s ja nao pode eliminar esta deslocacao.",ryde.getCurrentUserName());
+			} catch (InvalidTripDateException e) {
+				System.out.printf("%s nesta data nao tem registo de deslocacao.\n",ryde.getCurrentUserName());
+			}
+		}
 	}
 
 	private static boolean isValid(String pwd) {
