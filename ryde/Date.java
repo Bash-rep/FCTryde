@@ -78,9 +78,11 @@ public class Date implements Comparable<Date>, Serializable {
 	@Override
 	public int compareTo(Date o) {
 		int aux;
-		if ((aux = this.getYear() - o.getYear()) == 0)
-			if ((aux = this.getMonth() - o.getMonth()) == 0)
+		if ((aux = this.getYear() - o.getYear()) == 0) {
+			if ((aux = this.getMonth() - o.getMonth()) == 0) {
 				aux = this.getDay() - o.getDay();
+			}
+		}
 		return aux;
 	}
 	

@@ -7,7 +7,7 @@ public class TripClass implements Trip {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	Queue<User> queue;
 	Map<String, User> inCar;
 	User owner;
@@ -45,7 +45,7 @@ public class TripClass implements Trip {
 	public int freeSeats() {
 		return seats - inCar.size();
 	}
-	
+
 	@Override
 	public int takenSeats() {
 		return inCar.size();

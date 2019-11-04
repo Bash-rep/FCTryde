@@ -100,5 +100,4 @@ public class RydeClass implements Ryde {
 		return current.getName();
 	}
 
-
 }
