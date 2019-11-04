@@ -134,6 +134,7 @@ public class Main {
 				System.out.print(VALID_PWD);
 				pwd = in.nextLine();
 				if (pwdIsValid(pwd)) {
+					i=-1;
 					break pwdcheck;
 				}
 			}
