@@ -1,13 +1,14 @@
 package ryde;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Date implements Comparable<Date>, Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	int year, month, day, hour, minute;
 
 	public Date(int year, int month, int day, int hour, int minute) {
@@ -60,12 +61,19 @@ public class Date implements Comparable<Date>, Serializable {
 
 	@Override
 	public boolean equals(Object o) {
-		Date d = (Date) o;
-		if (this.day == d.getDay() && this.getMonth() == d.getMonth() && this.getYear() == d.getYear()) {
+		if (o == this) {
 			return true;
-		} else {
+		}
+		if (!(o instanceof Date)) {
 			return false;
 		}
+		Date d = (Date) o;
+		return (this.day == d.getDay() && this.getMonth() == d.getMonth() && this.getYear() == d.getYear());
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(year,month,day);
 	}
 
 	/**
@@ -85,9 +93,9 @@ public class Date implements Comparable<Date>, Serializable {
 		}
 		return aux;
 	}
-	
+
 	public String toString() {
-		return day+"-"+month+"-"+year+" "+hour+":"+minute;
+		return day + "-" + month + "-" + year + " " + hour + ":" + minute;
 	}
 
 }
