@@ -29,20 +29,15 @@ public class Main {
 	private static final String CONSULT = "consulta";
 
 	// cts ajuda
-	private static final String HELP_LOGGED_OUT =
-			"ajuda - Mostra os comandos existentes\n"
-			+ "termina - Termina a execucao do programa\n"
-			+ "regista - Regista um novo utilizador no programa\n"
+	private static final String HELP_LOGGED_OUT = "ajuda - Mostra os comandos existentes\n"
+			+ "termina - Termina a execucao do programa\n" + "regista - Regista um novo utilizador no programa\n"
 			+ "entrada - Permite a entrada (\"login\") dum utilizador no programa";
-	private static final String HELP_LOGGED_IN =
-			"ajuda - Mostra os comandos existentes\n"
-			+ "sai - Termina a sessao deste utilizador no programa\n"
-			+ "nova - Regista uma nova deslocacao\n"
+	private static final String HELP_LOGGED_IN = "ajuda - Mostra os comandos existentes\n"
+			+ "sai - Termina a sessao deste utilizador no programa\n" + "nova - Regista uma nova deslocacao\n"
 			+ "lista - Lista todas ou algumas deslocacoes registadas\n"
 			+ "boleia - Regista uma boleia para uma dada deslocacao\n"
-			+ "consulta - Lista a informacao de uma dada deslocacao\n"
-			+ "retira - Retira uma dada boleia\n"
-			+ "remove - Elimina uma dada deslocacao";
+			+ "consulta - Lista a informacao de uma dada deslocacao\n" + "retira - Retira uma dada boleia\n"
+			+ "remove - Retira uma dada deslocacao";
 
 	// cts que definem as mensagens
 	private static final String NEW_TRIP_SUCCESS = "Deslocacao %d registada. Obrigado %s.\n";
@@ -114,6 +109,7 @@ public class Main {
 				processRemoveRide(in, ryde);
 				break;
 			case CONSULT:
+				processConsult(in, ryde);
 				break;
 			case EXIT:
 				if (processExit(ryde))
@@ -126,6 +122,30 @@ public class Main {
 		}
 
 		store(ryde);
+	}
+
+	private static void processConsult(Scanner in, Ryde ryde) {
+		String email = in.next().trim();
+		String dateStr = in.next().trim();
+		in.nextLine();
+
+		String timeStr = "0:0";
+
+		Date date = dateFromString(dateStr, timeStr);
+		if(ryde.getCurrentUserEmail() == null) {
+			System.out.println(INVALID_CMD);
+		}
+		else if (!ryde.hasUser(email)) {
+			System.out.println(NO_SUCH_USER);
+		} else if(dateIsValid(date)){
+			try {
+				ryde.getTripInfo(email, date);
+			} catch (InvalidTripDateException e) {
+				System.out.println(INVALID_TRIP_DATE);
+			}
+		}else {
+			System.out.println(INVALID_DATE);
+		}
 	}
 
 	private static boolean processExit(Ryde ryde) {
@@ -279,7 +299,7 @@ public class Main {
 				} catch (InvalidTripDateException e) {
 					System.out.println(INVALID_TRIP_DATE);
 				} catch (CannotCatchOwnRideException e) {
-					System.out.printf(CANNOT_CATCH_OWN_RIDE, email);
+					System.out.printf(CANNOT_CATCH_OWN_RIDE, ryde.getCurrentUserName());
 				} catch (TwoTripsOnSameDayException e) {
 					System.out.printf(TRIP_OR_RIDE_ON_SAME_DAY, ryde.getCurrentUserName());
 				}

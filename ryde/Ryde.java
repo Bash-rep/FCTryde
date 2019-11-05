@@ -112,7 +112,7 @@ public interface Ryde extends Serializable {
 	 * @throws NoSuchUserException
 	 * @throws InvalidTripDateException
 	 */
-	Trip getTripInfo(String owner, Date date) throws InvalidTripDateException;
+	String getTripInfo(String owner, Date date) throws InvalidTripDateException;
 
 	/**
 	 * Checks whether a user with the email </email> exists. Returns true if yes,

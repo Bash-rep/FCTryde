@@ -86,9 +86,8 @@ public class RydeClass implements Ryde {
 	}
 
 	@Override
-	public Trip getTripInfo(String owner, Date date) throws InvalidTripDateException {
-		// TODO Auto-generated method stub
-		return null;
+	public String getTripInfo(String owner, Date date) throws InvalidTripDateException {
+		return users.find(owner).getTrip(date).toString();
 	}
 
 	@Override

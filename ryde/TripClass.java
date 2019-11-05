@@ -84,6 +84,19 @@ public class TripClass implements Trip {
 		}
 	}
 
+	@Override
+	public String toString() {
+		Iterator<User> it = inCar.values();
+		
+		String carPeople = "";
+		
+		while (it.hasNext()) {
+			carPeople += it.next().getEmail();
+		}
+		return owner.getEmail() + "\n" + start + "-" + end + "\n" + date + "\n" + "Lugares vagos: " + freeSeats() + "\n"
+				+ "Boleias: " + carPeople + "\n" + "Em espera: " + inQueue() + "\n";
+	}
+
 	/**
 	 * called by removeRide if there are users in queue. fills empty seats in the
 	 * trip with users from the queue, if they haven't registered a trip or ride int
