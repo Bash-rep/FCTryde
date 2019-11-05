@@ -87,13 +87,15 @@ public class TripClass implements Trip {
 	@Override
 	public String toString() {
 		Iterator<User> it = inCar.values();
-		
+
 		String carPeople = "";
-		
+
 		while (it.hasNext()) {
 			carPeople += it.next().getEmail() + "; ";
 		}
-		carPeople = carPeople.substring(0, Math.min(carPeople.length(), carPeople.length() - 2));
+		if (!carPeople.equalsIgnoreCase("")) {
+			carPeople = carPeople.substring(0, Math.min(carPeople.length(), carPeople.length() - 2));
+		}
 		return owner.getEmail() + "\n" + start + "-" + end + "\n" + date + "\n" + "Lugares vagos: " + freeSeats() + "\n"
 				+ "Boleias: " + carPeople + "\n" + "Em espera: " + inQueue() + "\n";
 	}

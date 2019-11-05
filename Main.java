@@ -264,13 +264,17 @@ public class Main {
 		} else {
 			String dateStr = in.nextLine().trim();
 			Date date = dateFromStringTimeless(dateStr);
-			try {
-				ryde.removeTrip(date);
-				System.out.println(REMOVE_TRIP_SUCCESS);
-			} catch (TripHasRidesException e) {
-				System.out.printf(CANNOT_REMOVE_TRIP, ryde.getCurrentUserName());
-			} catch (InvalidTripDateException e) {
-				System.out.printf(NO_SUCH_TRIP, ryde.getCurrentUserName());
+			if (dateIsValid(date)) {
+				try {
+					ryde.removeTrip(date);
+					System.out.println(REMOVE_TRIP_SUCCESS);
+				} catch (TripHasRidesException e) {
+					System.out.printf(CANNOT_REMOVE_TRIP, ryde.getCurrentUserName());
+				} catch (InvalidTripDateException e) {
+					System.out.printf(NO_SUCH_TRIP, ryde.getCurrentUserName());
+				}
+			}else {
+				System.out.println(INVALID_DATE);
 			}
 		}
 	}
