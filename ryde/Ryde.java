@@ -12,59 +12,60 @@ import exception.TwoTripsOnSameDayException;
 public interface Ryde extends Serializable {
 	/**
 	 * Adds a new user to the database and returns the number of registered users at
-	 * the moment. If there's one already with that email it throws an exception
+	 * the moment. If there's already a user with that email, throws an exception.
 	 * 
 	 * @param email
 	 * @param nome
 	 * @param password
-	 * @return the number of users registered
+	 * @return number of users registered (including newly registered user)
 	 * @throws UserAlreadyExistsException
 	 */
 	int addUser(String email, String nome, String password);
 
 	/**
-	 * Logs the current user out and returns it. If there is no one logged id it
-	 * throws an exception
+	 * Logs the current user out and returns their email. If there is no one logged
+	 * in, throws an exception.
 	 * 
-	 * @return the previous logged in user
+	 * @return the newly logged out user's email
 	 * @throws NoLogInException
 	 */
 	String logOut();
 
 	/**
-	 * logs a user to the system and returns the number of logins of this user. If
-	 * the password is invalid or another user is logged in or the email given isn't
-	 * a key for any user in the system it throws an exception
+	 * Logs a user in and returns the number of times this user has logged in. If
+	 * the password is incorrect, another user is logged in, or the email provided
+	 * doesn't belong to any user in the system, throws an exception.
 	 * 
-	 * @return number of log ins
+	 * @return number of times newly logged in user has logged in
 	 * @throws InvalidPasswordException
 	 */
 	int logIn(String email, String pwd) throws InvalidPasswordException;
 
 	/**
-	 * Adds a new trip to the person currently logged in and returns the number of
-	 * trips already registered by this user. if there is no one logged in or the
-	 * user already has a trip or ride on that day it throws an exception
+	 * Adds a new trip to the user currently logged in and returns the number of
+	 * trips already registered by this user. If no one is logged in or the logged
+	 * in user already has a trip/ride on that day, throws an exception.
 	 * 
 	 * @param start
 	 * @param end
 	 * @param date
 	 * @param duration
 	 * @param seats
-	 * @return number of trips
+	 * @return number of trips registered by currently logged in user (including
+	 *         newly registered trip)
 	 * @throws NoLogInException
 	 * @throws TwoTripsOnSameDayException
 	 */
 	int addTrip(String start, String end, Date date, int duration, int seats) throws TwoTripsOnSameDayException;
 
 	/**
-	 * removes a trip on this given date from the logged in user. if there is rides
-	 * registered on this trip already it throws an exception. If no one is logged
-	 * in or there's no trips registered on that day for the logged in user it
-	 * throws an exception
+	 * Removes a trip on the provided date from the logged in user. If there are
+	 * rides registered on this trip already, throws an exception. If no one is
+	 * logged in or there are no trips registered on that day for the logged in
+	 * user, throws an exception.
 	 * 
 	 * @param date
-	 * @return
+	 * @return returns the removed trip object .toString()
 	 * @throws TripHasRidesException
 	 * @throws NoLogInException
 	 * @throws InvalidTripDateException
@@ -72,12 +73,18 @@ public interface Ryde extends Serializable {
 	String removeTrip(Date date) throws TripHasRidesException, InvalidTripDateException;
 
 	/**
-	 * Adds a new ride to the user who is logged in (who cannot have a trip or ride
-	 * registered on that day) and returns 0 if the ride was added or n when this
-	 * ride is already full. Where n>0 and n=number of people in queue (including
-	 * you). When this happens the rider goes to a queue.
+	 * Adds a new ride to the currently logged in user and returns 0 if the ride was
+	 * registered successfully or n when this ride is already full. Where (n > 0)
+	 * and (n = number of users in queue) (including the currently logged in user).
+	 * When this happens, the logged in user has not technically registered a ride
+	 * for the provided date, and will be able to register rides or trips on this
+	 * date for as long as they are in queue. If the currently logged in user has a
+	 * ride or trip registered for the provided date, throws an exception. If the
+	 * trip specified by the driver + date combination does not exist, throws an
+	 * exception. If the specified driver is the currently logged in user, throws an
+	 * exception.
 	 * 
-	 * @return 0 or the queue number
+	 * @return 0 or the number of users in queue
 	 * @throws DuplicateUserException
 	 * @throws NoLogInException
 	 * @throws NoSuchUserException
@@ -124,11 +131,16 @@ public interface Ryde extends Serializable {
 	boolean hasUser(String email);
 
 	/**
-	 * Returns the currently logged in user email
+	 * Returns the currently logged in user's email
 	 * 
-	 * @return current user
+	 * @return current user email
 	 */
 	String getCurrentUserEmail();
 
+	/**
+	 * Returns the currently logged in user's name
+	 * 
+	 * @return current user name
+	 */
 	String getCurrentUserName();
 }
