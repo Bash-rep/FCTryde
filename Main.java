@@ -138,7 +138,7 @@ public class Main {
 			System.out.println(NO_SUCH_USER);
 		} else if (dateIsValid(date)) {
 			try {
-				ryde.getTripInfo(email, date);
+				System.out.println(ryde.getTripInfo(email, date));
 			} catch (InvalidTripDateException e) {
 				System.out.println(INVALID_TRIP_DATE);
 			}
