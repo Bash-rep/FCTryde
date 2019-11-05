@@ -28,6 +28,22 @@ public class Main {
 	private static final String REMOVE_RIDE = "retira";
 	private static final String CONSULT = "consulta";
 
+	// cts ajuda
+	private static final String HELP_LOGGED_OUT =
+			"ajuda - Mostra os comandos existentes\n"
+			+ "termina - Termina a execucao do programa\n"
+			+ "regista - Regista um novo utilizador no programa\n"
+			+ "entrada - Permite a entrada (\"login\") dum utilizador no programa";
+	private static final String HELP_LOGGED_IN =
+			"ajuda - Mostra os comandos existentes\n"
+			+ "sai - Termina a sessao deste utilizador no programa\n"
+			+ "nova - Regista uma nova deslocacao\n"
+			+ "lista - Lista todas ou algumas deslocacoes registadas\n"
+			+ "boleia - Regista uma boleia para uma dada deslocacao\n"
+			+ "consulta - Lista a informacao de uma dada deslocacao\n"
+			+ "retira - Retira uma dada boleia\n"
+			+ "remove - Elimina uma dada deslocacao";
+
 	// cts que definem as mensagens
 	private static final String NEW_TRIP_SUCCESS = "Deslocacao %d registada. Obrigado %s.\n";
 	private static final String INVALID_CMD = "Comando invalido.";
@@ -83,6 +99,7 @@ public class Main {
 				processLogin(in, ryde);
 				break;
 			case HELP:
+				printHelp(ryde);
 				break;
 			case NEW_TRIP:
 				processNewTrip(in, ryde);
@@ -287,6 +304,14 @@ public class Main {
 					System.out.printf(NO_SUCH_RIDE, ryde.getCurrentUserName());
 				}
 			}
+		}
+	}
+
+	private static void printHelp(Ryde ryde) {
+		if (ryde.getCurrentUserEmail() == null) {
+			System.out.println(HELP_LOGGED_OUT);
+		} else {
+			System.out.println(HELP_LOGGED_IN);
 		}
 	}
 
