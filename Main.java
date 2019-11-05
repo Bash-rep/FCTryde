@@ -132,18 +132,17 @@ public class Main {
 		String timeStr = "0:0";
 
 		Date date = dateFromString(dateStr, timeStr);
-		if(ryde.getCurrentUserEmail() == null) {
+		if (ryde.getCurrentUserEmail() == null) {
 			System.out.println(INVALID_CMD);
-		}
-		else if (!ryde.hasUser(email)) {
+		} else if (!ryde.hasUser(email)) {
 			System.out.println(NO_SUCH_USER);
-		} else if(dateIsValid(date)){
+		} else if (dateIsValid(date)) {
 			try {
 				ryde.getTripInfo(email, date);
 			} catch (InvalidTripDateException e) {
 				System.out.println(INVALID_TRIP_DATE);
 			}
-		}else {
+		} else {
 			System.out.println(INVALID_DATE);
 		}
 	}
@@ -390,7 +389,6 @@ public class Main {
 	}
 
 	private static Ryde load() {
-
 		try {
 			ObjectInputStream file = new ObjectInputStream(new FileInputStream("persistence.ser"));
 			Ryde ryde = (Ryde) file.readObject();
@@ -405,7 +403,6 @@ public class Main {
 	}
 
 	private static void store(Ryde ryde) {
-
 		try {
 			ObjectOutputStream file = new ObjectOutputStream(new FileOutputStream("persistence.ser"));
 			file.writeObject(ryde);

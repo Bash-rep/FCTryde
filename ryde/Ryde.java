@@ -69,7 +69,7 @@ public interface Ryde extends Serializable {
 	 * @throws NoLogInException
 	 * @throws InvalidTripDateException
 	 */
-	Trip removeTrip(Date date) throws TripHasRidesException, InvalidTripDateException;
+	String removeTrip(Date date) throws TripHasRidesException, InvalidTripDateException;
 
 	/**
 	 * Adds a new ride to the user who is logged in (who cannot have a trip or ride

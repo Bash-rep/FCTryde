@@ -58,8 +58,8 @@ public class RydeClass implements Ryde {
 	}
 
 	@Override
-	public Trip removeTrip(Date date) throws TripHasRidesException, InvalidTripDateException {
-		return current.removeTrip(date);
+	public String removeTrip(Date date) throws TripHasRidesException, InvalidTripDateException {
+		return current.removeTrip(date).toString();
 	}
 
 	@Override
