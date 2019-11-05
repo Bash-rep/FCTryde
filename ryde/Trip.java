@@ -68,5 +68,5 @@ public interface Trip extends Serializable {
 	 * @throws TwoTripsOnSameDayException 
 	 */
 	void removeRide(User current);
-	
+
 }

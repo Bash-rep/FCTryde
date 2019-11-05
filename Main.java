@@ -206,7 +206,7 @@ public class Main {
 			int duration = in.nextInt();
 			int seats = in.nextInt();
 			in.nextLine();
-			
+
 			Date date = dateFromString(dateStr, timeStr);
 
 			if (!dateIsValid(date) || duration < 1 || seats < 0 || seats > 10) {
@@ -276,7 +276,7 @@ public class Main {
 		} else {
 			String dateStr = in.nextLine().trim();
 			Date date = dateFromStringTimeless(dateStr);
-			
+
 			if (!dateIsValid(date)) {
 				System.out.println(INVALID_DATE);
 			} else {

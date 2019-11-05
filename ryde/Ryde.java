@@ -84,7 +84,8 @@ public interface Ryde extends Serializable {
 	 * @throws InvalidTripDateException
 	 * @throws CannotCatchOwnRideException
 	 */
-	int addRide(String driver, Date date) throws InvalidTripDateException, TwoTripsOnSameDayException, CannotCatchOwnRideException;
+	int addRide(String driver, Date date)
+			throws InvalidTripDateException, TwoTripsOnSameDayException, CannotCatchOwnRideException;
 
 	/**
 	 * Removes the ride the logged in user registered for the specified date.

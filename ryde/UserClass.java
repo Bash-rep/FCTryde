@@ -94,14 +94,13 @@ public class UserClass implements User {
 	public String getName() {
 		return nomeCompleto;
 	}
-	
+
 	@Override
 	public Trip getTrip(Date date) throws InvalidTripDateException {
 		Trip trip = trips.find(date);
-		if(trip == null) {
+		if (trip == null) {
 			throw new InvalidTripDateException();
-		}
-		else {
+		} else {
 			return trip;
 		}
 	}
