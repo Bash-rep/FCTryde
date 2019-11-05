@@ -2,6 +2,8 @@ package ryde;
 
 import java.io.Serializable;
 
+import exception.TwoTripsOnSameDayException;
+
 public interface Trip extends Serializable {	
 
 	/**
@@ -59,5 +61,12 @@ public interface Trip extends Serializable {
 	 */
 	int add(User current);
 	
+	/**
+	 * removes a ride registered on this trip
+	 * 
+	 * @param current
+	 * @throws TwoTripsOnSameDayException 
+	 */
+	void removeRide(User current);
 	
 }

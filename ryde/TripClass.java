@@ -1,6 +1,7 @@
 package ryde;
 
 import dataStructures.*;
+import exception.TwoTripsOnSameDayException;
 
 public class TripClass implements Trip {
 	/**
@@ -75,8 +76,35 @@ public class TripClass implements Trip {
 		return allocateUser(current);
 	}
 
+	@Override
+	public void removeRide(User current) {
+		inCar.remove(current.getEmail());
+		if (queue.size() > 0) {
+			seatNextUserInQueue();
+		}
+	}
+
+	/**
+	 * called by removeRide if there are users in queue. fills empty seats in the
+	 * trip with users from the queue, if they haven't registered a trip or ride int
+	 * the meantime
+	 */
+	private void seatNextUserInQueue() {
+		User nextUserInQueue;
+		while (queue.size() > 0 && freeSeats() > 0) {
+			nextUserInQueue = queue.dequeue();
+			if (!nextUserInQueue.busyDay(date)) {
+				try {
+					nextUserInQueue.addRide(getDate(), this);
+				} catch (TwoTripsOnSameDayException e) {
+					// exception will never be thrown
+				}
+			}
+		}
+	}
+
 	private int allocateUser(User current) {
-		if(freeSeats()>0) {
+		if (freeSeats() > 0) {
 			inCar.insert(current.getEmail(), current);
 			return 0;
 		}

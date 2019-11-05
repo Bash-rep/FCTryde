@@ -105,4 +105,21 @@ public class UserClass implements User {
 			return trip;
 		}
 	}
+
+	@Override
+	public void removeRide(Date date, User current) throws InvalidTripDateException {
+		Trip trip;
+		if ((trip = rides.remove(date)) == null) {
+			throw new InvalidTripDateException();
+		}
+		trip.removeRide(current);
+	}
+
+	@Override
+	public boolean busyDay(Date date) {
+		if (rides.find(date) == null && trips.find(date) == null) {
+			return false;
+		}
+		return true;
+	}
 }

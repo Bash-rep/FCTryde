@@ -31,7 +31,8 @@ public interface User extends Serializable {
 
 	/**
 	 * adds a new trip to this user. if there's already another ride or trip
-	 * scheduled to this date it throws an exception. on success returns how many trips this user has
+	 * scheduled to this date it throws an exception. on success returns how many
+	 * trips this user has
 	 * 
 	 * @param date
 	 * @param trip
@@ -46,34 +47,58 @@ public interface User extends Serializable {
 	 * @return
 	 */
 	String getEmail();
-	
+
 	/**
-	 * removes the trip this user has on this date. on success returns the trip that was removed. If there is no trip on this date or the trip as already other users on the ride it throws an exception
+	 * removes the trip this user has on this date. on success returns the trip that
+	 * was removed. If there is no trip on this date or the trip as already other
+	 * users on the ride it throws an exception
+	 * 
 	 * @param date
 	 * @return removed trip
 	 * @throws TripHasRidesException
 	 * @throws InvalidTripDateException
 	 */
 	Trip removeTrip(Date date) throws TripHasRidesException, InvalidTripDateException;
-	
+
 	/**
-	 * increments  the number of visits from this user on the application. always succeeds
+	 * increments the number of visits from this user on the application. always
+	 * succeeds
+	 * 
 	 * @return
 	 */
 	int incNumberOfVisits();
-	
+
 	/**
 	 * gets this user name
+	 * 
 	 * @return
 	 */
 	String getName();
-	
+
 	/**
 	 * gets a trip this user has on this date
+	 * 
 	 * @param date
 	 * @return trip on given date
 	 * @throws InvalidTripDateException
 	 */
 	Trip getTrip(Date date) throws InvalidTripDateException;
+
+	/**
+	 * removes a trip this user has on this date
+	 * 
+	 * @param date
+	 * @param current
+	 * @throws InvalidTripDateException
+	 */
+	void removeRide(Date date, User current) throws InvalidTripDateException;
+	
+	/**
+	 * returns true if user has trip or ride on specified date, false otherwise
+	 * 
+	 * @param date
+	 * @return true if user has trip or ride on specified date, false otherwise
+	 */
+	boolean busyDay (Date date);
 
 }

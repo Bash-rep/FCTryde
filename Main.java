@@ -42,7 +42,7 @@ public class Main {
 	private static final String TWO_TRIPS_SAME_DAY = "%s ja tem uma deslocacao ou boleia nesta data.\n";
 	private static final String INVALID_DATA = "Dados invalidos.";
 	private static final String NO_SUCH_TRIP = "%s nesta data nao tem registo de deslocacao.\n";
-	private static final String CANNOT_REMOVE_TRIP = "%s ja nao pode eliminar esta deslocacao.";
+	private static final String CANNOT_REMOVE_TRIP = "%s ja nao pode eliminar esta deslocacao.\n";
 	private static final String REMOVE_TRIP_SUCCESS = "Deslocacao removida.";
 	private static final String CANNOT_CATCH_OWN_RIDE = "%s nao pode dar boleia a si proprio.\n";
 	private static final String TRIP_OR_RIDE_ON_SAME_DAY = "%s ja registou uma boleia ou deslocacao nesta data.\n";
@@ -51,6 +51,8 @@ public class Main {
 	private static final String NEW_RIDE_SUCCESS = "Boleia registada.";
 	private static final String NO_SUCH_USER_2 = "Utilizador inexistente.";
 	private static final String INVALID_DATE = "Data invalida.";
+	private static final String REMOVE_RIDE_SUCCESS = "%s boleia retirada.\n";
+	private static final String NO_SUCH_RIDE = "%s nesta data nao tem registo de boleia.\n";
 
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
@@ -196,21 +198,16 @@ public class Main {
 		in.nextLine();
 		if (ryde.getCurrentUserEmail() == null) {
 			System.out.println(INVALID_CMD);
-		}
-		else {
+		} else {
 			String start = in.nextLine().trim();
 			String end = in.nextLine().trim();
 			String dateStr = in.next().trim();
-			String time = in.next().trim();
+			String timeStr = in.next().trim();
 			int duration = in.nextInt();
 			int seats = in.nextInt();
 			in.nextLine();
-
-			String[] splitDate = dateStr.split("-");
-			String[] splitTime = time.split(":");
-
-			Date date = new Date(Integer.parseInt(splitDate[2]), Integer.parseInt(splitDate[1]),
-					Integer.parseInt(splitDate[0]), Integer.parseInt(splitTime[0]), Integer.parseInt(splitTime[1]));
+			
+			Date date = dateFromString(dateStr, timeStr);
 
 			if (!dateIsValid(date) || duration < 1 || seats < 0 || seats > 10) {
 				System.out.println(INVALID_DATA);
@@ -229,11 +226,8 @@ public class Main {
 		if (ryde.getCurrentUserEmail() == null) {
 			System.out.println(INVALID_CMD);
 		} else {
-			String dateStr = in.next().trim();
-			in.nextLine();
-			String[] splitDate = dateStr.split("-");
-			Date date = new Date(Integer.parseInt(splitDate[2]), Integer.parseInt(splitDate[1]),
-					Integer.parseInt(splitDate[0]), 0, 0);
+			String dateStr = in.nextLine().trim();
+			Date date = dateFromStringTimeless(dateStr);
 			try {
 				ryde.removeTrip(date);
 				System.out.println(REMOVE_TRIP_SUCCESS);
@@ -246,19 +240,16 @@ public class Main {
 	}
 
 	private static void processNewRide(Scanner in, Ryde ryde) {
-		
+
 		if (ryde.getCurrentUserEmail() == null) {
 			System.out.println(INVALID_CMD);
 		} else {
 			String email = in.next().trim();
 			String dateStr = in.nextLine().trim();
-			
-			String[] splitDate = dateStr.split("-");
-			Date date = new Date(Integer.parseInt(splitDate[2]), Integer.parseInt(splitDate[1]),
-					Integer.parseInt(splitDate[0]), 0, 0);
+			Date date = dateFromStringTimeless(dateStr);
 			if (!ryde.hasUser(email)) {
 				System.out.println(NO_SUCH_USER_2);
-			} else if(!dateIsValid(date)) {
+			} else if (!dateIsValid(date)) {
 				System.out.println(INVALID_DATE);
 			} else {
 				try {
@@ -278,9 +269,38 @@ public class Main {
 			}
 		}
 	}
-	
+
 	private static void processRemoveRide(Scanner in, Ryde ryde) {
-		//TODO
+		if (ryde.getCurrentUserEmail() == null) {
+			System.out.println(INVALID_CMD);
+		} else {
+			String dateStr = in.nextLine().trim();
+			Date date = dateFromStringTimeless(dateStr);
+			
+			if (!dateIsValid(date)) {
+				System.out.println(INVALID_DATE);
+			} else {
+				try {
+					ryde.removeRide(date);
+					System.out.printf(REMOVE_RIDE_SUCCESS, ryde.getCurrentUserName());
+				} catch (InvalidTripDateException e) {
+					System.out.printf(NO_SUCH_RIDE, ryde.getCurrentUserName());
+				}
+			}
+		}
+	}
+
+	private static Date dateFromString(String dateStr, String timeStr) {
+		String[] splitDate = dateStr.split("-");
+		String[] splitTime = timeStr.split(":");
+		return new Date(Integer.parseInt(splitDate[2]), Integer.parseInt(splitDate[1]), Integer.parseInt(splitDate[0]),
+				Integer.parseInt(splitTime[0]), Integer.parseInt(splitTime[1]));
+	}
+
+	private static Date dateFromStringTimeless(String dateStr) {
+		String[] splitDate = dateStr.split("-");
+		return new Date(Integer.parseInt(splitDate[2]), Integer.parseInt(splitDate[1]), Integer.parseInt(splitDate[0]),
+				0, 0);
 	}
 
 	private static boolean dateIsValid(Date date) {

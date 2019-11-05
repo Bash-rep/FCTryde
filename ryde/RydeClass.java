@@ -81,8 +81,8 @@ public class RydeClass implements Ryde {
 
 	@Override
 	public String removeRide(Date date) throws InvalidTripDateException {
-		// TODO Auto-generated method stub
-		return null;
+		current.removeRide(date, current);
+		return current.getName();
 	}
 
 	@Override
