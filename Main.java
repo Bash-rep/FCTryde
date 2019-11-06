@@ -15,6 +15,9 @@ import ryde.*;
 
 public class Main {
 
+	private static final String TODAS = "todas";
+	private static final String BOLEIAS = "boleias";
+	private static final String MINHAS = "minhas";
 	// cts que definem os comandos
 	private static final String EXIT = "termina";
 	private static final String LOGOUT = "sai";
@@ -82,6 +85,7 @@ public class Main {
 			cmd = readCmd(in);
 			switch (cmd) {
 			case LIST:
+				processList(in,ryde);
 				break;
 			case SIGNUP:
 				processSignup(in, ryde);
@@ -121,6 +125,21 @@ public class Main {
 		}
 		in.close();
 		//store(ryde);
+	}
+
+	private static void processList(Scanner in, Ryde ryde) {
+		if(in.hasNextInt()) {
+			String timeStr= "0:0";
+			Date date = dateFromString(in.nextLine().trim(), timeStr);
+		}else if(in.hasNext(MINHAS) || in.hasNext(BOLEIAS) || in.hasNext(TODAS)) {
+			switch (in.nextLine().trim().toLowerCase()) {
+			case MINHAS:break;
+			case BOLEIAS:break;
+			case TODAS:break;
+			}
+		}else {
+			String user = in.nextLine().trim();
+		}
 	}
 
 	private static void processConsult(Scanner in, Ryde ryde) {
