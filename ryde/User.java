@@ -2,6 +2,7 @@ package ryde;
 
 import java.io.Serializable;
 
+import dataStructures.Iterator;
 import exception.InvalidTripDateException;
 import exception.TripHasRidesException;
 import exception.TwoTripsOnSameDayException;
@@ -93,5 +94,17 @@ public interface User extends Serializable {
 	 * @throws InvalidTripDateException
 	 */
 	Trip removeRide(Date date, User current) throws InvalidTripDateException;
+	
+	/**
+	 * returns an iterator of this user trips
+	 * @return
+	 */
+	Iterator<Trip> getTripsIterator();
+	
+	/**
+	 * returns an iterator of this user rides
+	 * @return
+	 */
+	Iterator<Trip> getRidesIterator();
 
 }

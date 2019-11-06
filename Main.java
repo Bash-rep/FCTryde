@@ -6,6 +6,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Scanner;
 
+import dataStructures.Iterator;
 import exception.CannotCatchOwnRideException;
 import exception.InvalidPasswordException;
 import exception.InvalidTripDateException;
@@ -85,7 +86,7 @@ public class Main {
 			cmd = readCmd(in);
 			switch (cmd) {
 			case LIST:
-				processList(in,ryde);
+				processList(in, ryde);
 				break;
 			case SIGNUP:
 				processSignup(in, ryde);
@@ -124,23 +125,47 @@ public class Main {
 			}
 		}
 		in.close();
-		//store(ryde);
+		// store(ryde);
 	}
 
 	private static void processList(Scanner in, Ryde ryde) {
-		if(in.hasNextInt()) {
-			String timeStr= "0:0";
+		if (ryde.getCurrentUserEmail() == null) {
+			System.out.println(INVALID_CMD);
+		}
+		if (in.hasNextInt()) {
+			String timeStr = "0:0";
 			Date date = dateFromString(in.nextLine().trim(), timeStr);
-		}else if(in.hasNext(MINHAS) || in.hasNext(BOLEIAS) || in.hasNext(TODAS)) {
+
+		} else if (in.hasNext(MINHAS) || in.hasNext(BOLEIAS) || in.hasNext(TODAS)) {
 			switch (in.nextLine().trim().toLowerCase()) {
-			case MINHAS:break;
-			case BOLEIAS:break;
-			case TODAS:break;
+			case MINHAS:
+				printList(ryde.tripsIterator());
+				break;
+			case BOLEIAS:
+				printList(ryde.ridesIterator());
+				break;
+			case TODAS:
+				break;
 			}
-		}else {
-			String user = in.nextLine().trim();
+		} else {
+			String email = in.nextLine().trim();
+			if(ryde.hasUser(email)) {
+				printList(ryde.tripsIterator(email));
+			}else {
+				System.out.println("Nao existe o utilizador dado.");
+			}
 		}
 	}
+
+	private static void printList(Iterator<Trip> it) {
+		if (!it.hasNext()) {
+			// e se nao tiver nada???
+		}
+		while (it.hasNext()) {
+			System.out.println(it.next());
+		}
+	}
+
 
 	private static void processConsult(Scanner in, Ryde ryde) {
 		String email = in.next().trim();
@@ -291,7 +316,7 @@ public class Main {
 				} catch (InvalidTripDateException e) {
 					System.out.printf(NO_SUCH_TRIP, ryde.getCurrentUserName());
 				}
-			}else {
+			} else {
 				System.out.println(INVALID_DATE);
 			}
 		}

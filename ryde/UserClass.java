@@ -1,5 +1,6 @@
 package ryde;
 
+import dataStructures.Iterator;
 import dataStructures.Map;
 import dataStructures.MapWithJavaClass;
 import exception.InvalidTripDateException;
@@ -117,6 +118,16 @@ public class UserClass implements User {
 			throw new InvalidTripDateException();
 		}
 		return trip;
+	}
+
+	@Override
+	public Iterator<Trip> getTripsIterator() {
+		return trips.values();
+	}
+
+	@Override
+	public Iterator<Trip> getRidesIterator() {
+		return rides.values();
 	}
 
 }
