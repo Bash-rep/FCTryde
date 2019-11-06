@@ -73,11 +73,15 @@ public class UserClass implements User {
 
 	@Override
 	public int addRide(Date date, Trip trip) throws TwoTripsOnSameDayException {
+		int inQueue;
 		if (rides.find(date) != null || trips.find(date) != null) {
 			throw new TwoTripsOnSameDayException();
 		}
+		if ((inQueue = trip.add(this)) > 0) {
+			return inQueue;
+		}
 		rides.insert(date, trip);
-		return rides.size();
+		return 0;
 	}
 
 	@Override

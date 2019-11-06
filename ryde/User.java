@@ -31,8 +31,8 @@ public interface User extends Serializable {
 
 	/**
 	 * adds a new trip to this user. if there's already another ride or trip
-	 * scheduled to this date it throws an exception. on success returns how many
-	 * trips this user has
+	 * scheduled to this date it throws an exception. on success returns 0 and if
+	 * the car was full it doesn't add the ride to the user but puts it in queue
 	 * 
 	 * @param date
 	 * @param trip
@@ -89,7 +89,7 @@ public interface User extends Serializable {
 	 * 
 	 * @param date
 	 * @param current
-	 * @return 
+	 * @return
 	 * @throws InvalidTripDateException
 	 */
 	Trip removeRide(Date date, User current) throws InvalidTripDateException;

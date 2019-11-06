@@ -67,16 +67,12 @@ public class RydeClass implements Ryde {
 			throws InvalidTripDateException, TwoTripsOnSameDayException, CannotCatchOwnRideException {
 		User owner = users.find(driver);
 		Trip trip = owner.getTrip(date);
-
+		
 		if (driver.equals(current.getEmail())) {
 			throw new CannotCatchOwnRideException();
 		}
-		int inQueue;
-		if ((inQueue = trip.add(current)) > 0) {
-			return inQueue;
-		}
-		current.addRide(date, trip);
-		return inQueue;
+		
+		return current.addRide(date, trip);
 	}
 
 	@Override
