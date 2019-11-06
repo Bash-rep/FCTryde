@@ -142,7 +142,7 @@ public class Main {
 				printList(ryde.tripsIterator());
 				break;
 			case BOLEIAS:
-				printList(ryde.ridesIterator());
+				printSecureList(ryde.ridesIterator());
 				break;
 			case TODAS:
 				break;
@@ -157,9 +157,19 @@ public class Main {
 		}
 	}
 
+	private static void printSecureList(Iterator<Trip> it) {
+		if (!it.hasNext()) {
+			System.out.println("Sem deslocacoes.");
+		}
+		while (it.hasNext()) {
+			Trip trip = it.next();
+			System.out.println(trip.getOwner().getEmail() + "\n" + trip.getStart() + "-" + trip.getEnd() + "\n" + trip.getDate() + " " + trip.getDuration() + "\n");
+		}
+	}
+
 	private static void printList(Iterator<Trip> it) {
 		if (!it.hasNext()) {
-			// e se nao tiver nada???
+			System.out.println("Sem deslocacoes.");
 		}
 		while (it.hasNext()) {
 			System.out.println(it.next());
