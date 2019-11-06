@@ -150,7 +150,7 @@ public class Main {
 		} else {
 			String email = in.nextLine().trim();
 			if(ryde.hasUser(email)) {
-				printList(ryde.tripsIterator(email));
+				printSecureList(ryde.tripsIterator(email));
 			}else {
 				System.out.println("Nao existe o utilizador dado.");
 			}
