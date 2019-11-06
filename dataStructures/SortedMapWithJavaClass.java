@@ -2,6 +2,11 @@ package dataStructures;
 
 public class SortedMapWithJavaClass<K extends Comparable<K>, V> implements SortedMap<K, V> {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	protected java.util.SortedMap<K, V> elementos;
 	protected int capPrevista;
 
@@ -27,12 +32,12 @@ public class SortedMapWithJavaClass<K extends Comparable<K>, V> implements Sorte
 
 	@Override
 	public Iterator<V> values() throws NoElementException {
-		return new ValueIterator<K, V>(iterator());
+		return new ValuesIterator<K, V>(iterator());
 	}
 
 	@Override
 	public Iterator<Entry<K, V>> iterator() throws NoElementException {
-		return new EntryIteratorWithJC<K, V>(elementos);
+		return new EntryIteratorWithJavaClass<K, V>(elementos);
 	}
 
 	@Override
