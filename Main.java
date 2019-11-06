@@ -134,7 +134,7 @@ public class Main {
 		if (ryde.getCurrentUserEmail() == null) {
 			System.out.println(INVALID_CMD);
 		} else if (!ryde.hasUser(email)) {
-			System.out.println(NO_SUCH_USER);
+			System.out.println("Utilizador inexistente.");
 		} else if (dateIsValid(date)) {
 			try {
 				System.out.println(ryde.getTripInfo(email, date));
@@ -287,7 +287,7 @@ public class Main {
 			String dateStr = in.nextLine().trim();
 			Date date = dateFromStringTimeless(dateStr);
 			if (!ryde.hasUser(email)) {
-				System.out.println(NO_SUCH_USER);
+				System.out.println("Utilizador inexistente.");
 			} else if (!dateIsValid(date)) {
 				System.out.println(INVALID_DATE);
 			} else {
