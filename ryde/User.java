@@ -89,16 +89,9 @@ public interface User extends Serializable {
 	 * 
 	 * @param date
 	 * @param current
+	 * @return 
 	 * @throws InvalidTripDateException
 	 */
-	void removeRide(Date date, User current) throws InvalidTripDateException;
-
-	/**
-	 * returns true if user has trip or ride on specified date, false otherwise
-	 * 
-	 * @param date
-	 * @return true if user has trip or ride on specified date, false otherwise
-	 */
-	boolean busyDay(Date date);
+	Trip removeRide(Date date, User current) throws InvalidTripDateException;
 
 }

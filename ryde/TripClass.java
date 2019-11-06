@@ -78,7 +78,9 @@ public class TripClass implements Trip {
 
 	@Override
 	public void removeRide(User current) {
-		inCar.remove(current.getEmail());
+		if (inCar.remove(current.getEmail()) == null) {
+			System.out.println("ERRO: Isto nao pode acontecer (TripClass)");
+		}
 		if (queue.size() > 0) {
 			seatNextUserInQueue();
 		}
@@ -95,28 +97,26 @@ public class TripClass implements Trip {
 		}
 		if (!carPeople.equalsIgnoreCase("Boleias: ")) {
 			carPeople = carPeople.substring(0, Math.min(carPeople.length(), carPeople.length() - 2));
-		}else {
+		} else {
 			carPeople = "Sem boleias registadas.";
 		}
-		return owner.getEmail() + "\n" + start + "-" + end + "\n" + date + " " + duration + "\n" + "Lugares vagos: " + freeSeats() + "\n"
-				+ carPeople + "\n" + "Em espera: " + inQueue() + "\n";
+		return owner.getEmail() + "\n" + start + "-" + end + "\n" + date + " " + duration + "\n" + "Lugares vagos: "
+				+ freeSeats() + "\n" + carPeople + "\n" + "Em espera: " + inQueue();
 	}
 
 	/**
 	 * called by removeRide if there are users in queue. fills empty seats in the
-	 * trip with users from the queue, if they haven't registered a trip or ride int
+	 * trip with users from the queue, if they haven't registered a trip or ride in
 	 * the meantime
 	 */
 	private void seatNextUserInQueue() {
 		User nextUserInQueue;
 		while (queue.size() > 0 && freeSeats() > 0) {
 			nextUserInQueue = queue.dequeue();
-			if (!nextUserInQueue.busyDay(date)) {
-				try {
-					nextUserInQueue.addRide(getDate(), this);
-				} catch (TwoTripsOnSameDayException e) {
-					// exception will never be thrown
-				}
+			try {
+				nextUserInQueue.addRide(getDate(), this);
+				inCar.insert(nextUserInQueue.getEmail(), nextUserInQueue);
+			} catch (TwoTripsOnSameDayException e) {
 			}
 		}
 	}

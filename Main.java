@@ -37,7 +37,7 @@ public class Main {
 			+ "lista - Lista todas ou algumas deslocacoes registadas\n"
 			+ "boleia - Regista uma boleia para uma dada deslocacao\n"
 			+ "consulta - Lista a informacao de uma dada deslocacao\n" + "retira - Retira uma dada boleia\n"
-			+ "remove - Retira uma dada deslocacao";
+			+ "remove - Elimina uma dada deslocacao";
 
 	// cts que definem as mensagens
 	private static final String NEW_TRIP_SUCCESS = "Deslocacao %d registada. Obrigado %s.\n";
@@ -50,7 +50,7 @@ public class Main {
 	private static final String FAREWELL = "Ate a proxima %s.\n";
 	private static final String NO_SUCH_USER = "Utilizador nao existente.";
 	private static final String SUCCESSFUL_LOGIN = "Visita %d efetuada.\n";
-	private static final String TWO_TRIPS_SAME_DAY = "%s ja tem uma deslocacao ou boleia nesta data.\n";
+	private static final String TWO_TRIPS_SAME_DAY = "%s ja tem uma deslocacao ou boleia registada nesta data.\n";
 	private static final String INVALID_DATA = "Dados invalidos.";
 	private static final String NO_SUCH_TRIP = "%s nesta data nao tem registo de deslocacao.\n";
 	private static final String CANNOT_REMOVE_TRIP = "%s ja nao pode eliminar esta deslocacao.\n";
@@ -60,7 +60,6 @@ public class Main {
 	private static final String INVALID_TRIP_DATE = "Deslocacao nao existe.";
 	private static final String IN_QUEUE = "Ficou na fila de espera (posicao %d)\n";
 	private static final String NEW_RIDE_SUCCESS = "Boleia registada.";
-	private static final String NO_SUCH_USER_2 = "Utilizador inexistente.";
 	private static final String INVALID_DATE = "Data invalida.";
 	private static final String REMOVE_RIDE_SUCCESS = "%s boleia retirada.\n";
 	private static final String NO_SUCH_RIDE = "%s nesta data nao tem registo de boleia.\n";
@@ -120,8 +119,8 @@ public class Main {
 				System.out.println(INVALID_CMD);
 			}
 		}
-
-		store(ryde);
+		in.close();
+		//store(ryde);
 	}
 
 	private static void processConsult(Scanner in, Ryde ryde) {
@@ -288,7 +287,7 @@ public class Main {
 			String dateStr = in.nextLine().trim();
 			Date date = dateFromStringTimeless(dateStr);
 			if (!ryde.hasUser(email)) {
-				System.out.println(NO_SUCH_USER_2);
+				System.out.println(NO_SUCH_USER);
 			} else if (!dateIsValid(date)) {
 				System.out.println(INVALID_DATE);
 			} else {
@@ -321,8 +320,7 @@ public class Main {
 				System.out.println(INVALID_DATE);
 			} else {
 				try {
-					ryde.removeRide(date);
-					System.out.printf(REMOVE_RIDE_SUCCESS, ryde.getCurrentUserName());
+					System.out.printf(REMOVE_RIDE_SUCCESS, ryde.removeRide(date));
 				} catch (InvalidTripDateException e) {
 					System.out.printf(NO_SUCH_RIDE, ryde.getCurrentUserName());
 				}
