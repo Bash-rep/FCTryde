@@ -13,8 +13,8 @@ public class UserClass implements User {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	Map<Date, Trip> rides;// boleias
-	Map<Date, Trip> trips;// deslocacoes
+	Map<Integer, Trip> rides;// boleias
+	Map<Integer, Trip> trips;// deslocacoes
 	String email, password, nomeCompleto;
 	int visits;
 
@@ -23,8 +23,8 @@ public class UserClass implements User {
 		this.password = encrypt(password);
 		this.nomeCompleto = nomeCompleto;
 		this.visits = 0;
-		rides = new MapWithJavaClass<Date, Trip>();
-		trips = new MapWithJavaClass<Date, Trip>();
+		rides = new MapWithJavaClass<>();
+		trips = new MapWithJavaClass<>();
 	}
 
 	private String encrypt(String pwd) {
@@ -53,35 +53,35 @@ public class UserClass implements User {
 
 	@Override
 	public int addTrip(Date date, Trip trip) throws TwoTripsOnSameDayException {
-		if (rides.find(date) != null || trips.find(date) != null) {
+		if (rides.find(date.toInt()) != null || trips.find(date.toInt()) != null) {
 			throw new TwoTripsOnSameDayException();
 		}
-		trips.insert(date, trip);
+		trips.insert(date.toInt(), trip);
 		return trips.size();
 	}
 
 	@Override
 	public Trip removeTrip(Date date) throws TripHasRidesException, InvalidTripDateException {
 		Trip trip;
-		if ((trip = trips.find(date)) == null) {
+		if ((trip = trips.find(date.toInt())) == null) {
 			throw new InvalidTripDateException();
 		}
 		if (trip.takenSeats() > 0) {
 			throw new TripHasRidesException();
 		}
-		return trips.remove(date);
+		return trips.remove(date.toInt());
 	}
 
 	@Override
 	public int addRide(Date date, Trip trip) throws TwoTripsOnSameDayException {
 		int inQueue;
-		if (rides.find(date) != null || trips.find(date) != null) {
+		if (rides.find(date.toInt()) != null || trips.find(date.toInt()) != null) {
 			throw new TwoTripsOnSameDayException();
 		}
 		if ((inQueue = trip.add(this)) > 0) {
 			return inQueue;
 		}
-		rides.insert(date, trip);
+		rides.insert(date.toInt(), trip);
 		return 0;
 	}
 
@@ -102,7 +102,7 @@ public class UserClass implements User {
 
 	@Override
 	public Trip getTrip(Date date) throws InvalidTripDateException {
-		Trip trip = trips.find(date);
+		Trip trip = trips.find(date.toInt());
 		if (trip == null) {
 			throw new InvalidTripDateException();
 		} else {
@@ -114,7 +114,7 @@ public class UserClass implements User {
 	public Trip removeRide(Date date, User current) throws InvalidTripDateException {
 		Trip trip;
 		
-		if ((trip = rides.remove(date)) == null) {
+		if ((trip = rides.remove(date.toInt())) == null) {
 			throw new InvalidTripDateException();
 		}
 		return trip;

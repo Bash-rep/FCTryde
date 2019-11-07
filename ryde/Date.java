@@ -97,5 +97,8 @@ public class Date implements Comparable<Date>, Serializable {
 	public String toString() {
 		return day + "-" + month + "-" + year + " " + hour + ":" + minute;
 	}
-
+	
+	public int toInt() {
+		return (year*1000)+(month*100)+day;
+	} 
 }

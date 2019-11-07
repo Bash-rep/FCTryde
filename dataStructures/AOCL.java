@@ -2,7 +2,7 @@ package dataStructures;
 
 public class AOCL {
 	
-	DoublyLinkedList<Integer>[] elements;
+	DoublyLinkedList<Entry<Integer,Object>>[] elements;
 	int size;
 	
 	@SuppressWarnings("unchecked")
@@ -16,15 +16,15 @@ public class AOCL {
 		this.size = size;
 		
 		for(int i = 0 ; i < size ; i++) {
-			elements[i] = new DoublyLinkedList<Integer>();
+			elements[i] = new DoublyLinkedList<Entry<Integer,Object>>();
 		}
 	}
-	public void insert(int index,int element) {
+	public void insert(int index,Entry<Integer, Object> element) {
 		elements[index].addLast(element);
 	}
 	
-	public DListNode<Integer> concatAll() {
-		DListNode<Integer> last= null,next = null, head = null;
+	public DListNode<Entry<Integer,Object>> concatAll() {
+		DListNode<Entry<Integer,Object>> last= null,next = null, head = null;
 		int lastIndex = -1,nextIndex = 0;
 		boolean done = false;
 		
