@@ -25,44 +25,22 @@ public class AOCL {
 		elements[index].addLast(element);
 	}
 	
-	public DListNode<Entry<Integer,Trip>> concatAll() {
-		DListNode<Entry<Integer,Trip>> last= null,next = null, head = null;
-		int lastIndex = -1,nextIndex = 0;
-		boolean done = false;
-		
-		while(!done) {
-			if(last == null) {
-				lastIndex++;
-				last = elements[lastIndex].tail;
-			}
-			if(next == null && last != null) {
-				nextIndex++;
-				next = elements[nextIndex].head;					
-			}else if(next == null && last == null){
-				nextIndex++;
-			}
-			if(last != null && next != null) {
-				if(head == null) {
-					head = elements[lastIndex].head;
+	public DListNode<Entry<Integer, Trip>> concatAll() {
+		DListNode<Entry<Integer, Trip>> tail = new DListNode<Entry<Integer, Trip>>(null), head = null, finalHead = null;
+
+		for (int i = 0; i < size; i++) {
+			if (elements[i].head != null) {
+				if (finalHead == null) {
+					finalHead = elements[i].head;
 				}
-				last.next = next;
-				next.previous = last;
-				last = elements[nextIndex].tail;
-				next = null;
-			}
-			if(nextIndex >= size-1) {
-				done = true;
-			}
-		}
-		
-		if(head == null) {
-			for(int i = 0 ; i < size && head == null; i++) {
 				head = elements[i].head;
+				tail.next = head;
+				head.previous = tail;
+				tail = elements[i].tail;
 			}
 		}
-		
+
 		initialize(size);
-		
-		return head;
+		return finalHead;
 	}
 }
