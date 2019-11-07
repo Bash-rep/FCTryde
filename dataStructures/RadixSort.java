@@ -2,7 +2,7 @@ package dataStructures;
 
 public class RadixSort {
 	
-	public List<Integer> sort(DoublyLinkedList<Integer> sortables, int maxSize) {
+	public static List<Integer> sort(DoublyLinkedList<Integer> sortables, int maxSize) {
 		
 		DListNode<Integer> node;
 		
@@ -10,7 +10,7 @@ public class RadixSort {
 			return null;
 		}
 		
-		//AOCL buckets = new AOCL(10);
+		AOCL buckets = new AOCL(10);
 		
 		int bucketIndex;
 		int currentInt;
@@ -19,15 +19,17 @@ public class RadixSort {
 			do {
 				currentInt = node.getElement();
 				bucketIndex = (int) Math.floor((currentInt%(Math.pow(10, i)))/(Math.pow(10, i-1)));
-				//buckets.insert(bucketIndex, currentInt);
+				buckets.insert(bucketIndex, currentInt);
 			} while ((node = node.getNext()) != null);
-			//node = buckets.concatAll();
+			node = buckets.concatAll();
 		}
 		
+		DoublyLinkedList<Integer> sorted = new DoublyLinkedList<Integer>();
+		
 		do {
-			sortables.addLast(node.getElement());
+			sorted.addLast(node.getElement());
 		} while ((node = node.getNext()) != null);
 
-		return sortables;
+		return sorted;
 	}
 }
