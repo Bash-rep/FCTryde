@@ -6,6 +6,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Scanner;
 
+import dataStructures.Entry;
 import dataStructures.Iterator;
 import exception.CannotCatchOwnRideException;
 import exception.InvalidPasswordException;
@@ -157,22 +158,22 @@ public class Main {
 		}
 	}
 
-	private static void printSecureList(Iterator<Trip> it) {
-		if (!it.hasNext()) {
+	private static void printSecureList(Iterator<Entry<Integer, Trip>> iterator) {
+		if (!iterator.hasNext()) {
 			System.out.println("Sem deslocacoes.");
 		}
-		while (it.hasNext()) {
-			Trip trip = it.next();
+		while (iterator.hasNext()) {
+			Trip trip = iterator.next().getValue();
 			System.out.println(trip.getOwner().getEmail() + "\n" + trip.getStart() + "-" + trip.getEnd() + "\n" + trip.getDate() + " " + trip.getDuration() + "\n");
 		}
 	}
 
-	private static void printList(Iterator<Trip> it) {
-		if (!it.hasNext()) {
+	private static void printList(Iterator<Entry<Integer, Trip>> iterator) {
+		if (!iterator.hasNext()) {
 			System.out.println("Sem deslocacoes.");
 		}
-		while (it.hasNext()) {
-			System.out.println(it.next());
+		while (iterator.hasNext()) {
+			System.out.println(iterator.next().getValue());
 		}
 	}
 

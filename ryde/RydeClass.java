@@ -1,5 +1,6 @@
 package ryde;
 
+import dataStructures.Entry;
 import dataStructures.Iterator;
 import dataStructures.Map;
 import dataStructures.MapWithJavaClass;
@@ -106,17 +107,17 @@ public class RydeClass implements Ryde {
 	}
 
 	@Override
-	public Iterator<Trip> tripsIterator() {
+	public Iterator<Entry<Integer, Trip>> tripsIterator() {
 		return current.getTripsIterator();
 	}
 
 	@Override
-	public Iterator<Trip> ridesIterator() {
+	public Iterator<Entry<Integer, Trip>> ridesIterator() {
 		return current.getRidesIterator();
 	}
 
 	@Override
-	public Iterator<Trip> tripsIterator(String email) {
+	public Iterator<Entry<Integer, Trip>> tripsIterator(String email) {
 		return users.find(email).getTripsIterator();
 	}
 

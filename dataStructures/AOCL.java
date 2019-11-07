@@ -1,8 +1,10 @@
 package dataStructures;
 
+import ryde.Trip;
+
 public class AOCL {
 	
-	DoublyLinkedList<Entry<Integer,Object>>[] elements;
+	DoublyLinkedList<Entry<Integer,Trip>>[] elements;
 	int size;
 	
 	@SuppressWarnings("unchecked")
@@ -16,15 +18,15 @@ public class AOCL {
 		this.size = size;
 		
 		for(int i = 0 ; i < size ; i++) {
-			elements[i] = new DoublyLinkedList<Entry<Integer,Object>>();
+			elements[i] = new DoublyLinkedList<Entry<Integer,Trip>>();
 		}
 	}
-	public void insert(int index,Entry<Integer, Object> element) {
+	public void insert(int index,Entry<Integer, Trip> element) {
 		elements[index].addLast(element);
 	}
 	
-	public DListNode<Entry<Integer,Object>> concatAll() {
-		DListNode<Entry<Integer,Object>> last= null,next = null, head = null;
+	public DListNode<Entry<Integer,Trip>> concatAll() {
+		DListNode<Entry<Integer,Trip>> last= null,next = null, head = null;
 		int lastIndex = -1,nextIndex = 0;
 		boolean done = false;
 		

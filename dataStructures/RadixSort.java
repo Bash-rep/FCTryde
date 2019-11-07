@@ -1,10 +1,12 @@
 package dataStructures;
 
+import ryde.Trip;
+
 public class RadixSort {
 	
-	public static List<Entry<Integer, Object>> sort(DoublyLinkedList<Entry<Integer, Object>> sortables, int maxSize) {
+	public static List<Entry<Integer, Trip>> sort(DoublyLinkedList<Entry<Integer, Trip>> sortables, int maxSize) {
 		
-		DListNode<Entry<Integer, Object>> node;
+		DListNode<Entry<Integer, Trip>> node;
 		
 		if ((node = sortables.head) == null) {
 			return null;
@@ -14,7 +16,7 @@ public class RadixSort {
 		
 		int bucketIndex;
 		int currentKey;
-		Entry<Integer, Object> currentEntry;
+		Entry<Integer, Trip> currentEntry;
 		
 		for (int i = 1; i <= maxSize; i++) {
 			do {
@@ -26,7 +28,7 @@ public class RadixSort {
 			node = buckets.concatAll();
 		}
 		
-		DoublyLinkedList<Entry<Integer, Object>> sorted = new DoublyLinkedList<>();
+		DoublyLinkedList<Entry<Integer, Trip>> sorted = new DoublyLinkedList<>();
 		
 		do {
 			sorted.addLast(node.getElement());

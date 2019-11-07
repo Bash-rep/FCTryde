@@ -2,6 +2,7 @@ package ryde;
 
 import java.io.Serializable;
 
+import dataStructures.Entry;
 import dataStructures.Iterator;
 import exception.CannotCatchOwnRideException;
 import exception.InvalidPasswordException;
@@ -149,18 +150,18 @@ public interface Ryde extends Serializable {
 	 * gets an iterator to List the current user Trips 
 	 * @return
 	 */
-	Iterator<Trip> tripsIterator();
+	Iterator<Entry<Integer, Trip>> tripsIterator();
 	
 	/**
 	 * gets an iterator to List the current user rides
 	 * @return
 	 */
-	Iterator<Trip> ridesIterator();
+	Iterator<Entry<Integer, Trip>> ridesIterator();
 	
 	/**
 	 * gets an iterator to List the given user rides.
 	 * @param email
 	 * @return
 	 */
-	Iterator<Trip> tripsIterator(String email);
+	Iterator<Entry<Integer, Trip>> tripsIterator(String email);
 }

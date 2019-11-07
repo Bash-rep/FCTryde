@@ -2,6 +2,7 @@ package ryde;
 
 import java.io.Serializable;
 
+import dataStructures.Entry;
 import dataStructures.Iterator;
 import exception.InvalidTripDateException;
 import exception.TripHasRidesException;
@@ -99,12 +100,12 @@ public interface User extends Serializable {
 	 * returns an iterator of this user trips
 	 * @return
 	 */
-	Iterator<Trip> getTripsIterator();
+	Iterator<Entry<Integer, Trip>> getTripsIterator();
 	
 	/**
 	 * returns an iterator of this user rides
 	 * @return
 	 */
-	Iterator<Trip> getRidesIterator();
+	Iterator<Entry<Integer, Trip>> getRidesIterator();
 
 }

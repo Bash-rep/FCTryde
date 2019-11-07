@@ -1,8 +1,11 @@
 package ryde;
 
+import dataStructures.DoublyLinkedList;
+import dataStructures.Entry;
 import dataStructures.Iterator;
 import dataStructures.Map;
 import dataStructures.MapWithJavaClass;
+import dataStructures.RadixSort;
 import exception.InvalidTripDateException;
 import exception.TripHasRidesException;
 import exception.TwoTripsOnSameDayException;
@@ -121,13 +124,25 @@ public class UserClass implements User {
 	}
 
 	@Override
-	public Iterator<Trip> getTripsIterator() {
-		return trips.values();
+	public Iterator<Entry<Integer, Trip>> getTripsIterator() {
+		Iterator<Entry<Integer, Trip>> it = trips.iterator();
+		DoublyLinkedList<Entry<Integer, Trip>> toSort = new DoublyLinkedList<>();
+	
+		while(it.hasNext()) {
+			toSort.addLast(it.next());
+		}
+		return RadixSort.sort(toSort, 8).iterator();
 	}
 
 	@Override
-	public Iterator<Trip> getRidesIterator() {
-		return rides.values();
+	public Iterator<Entry<Integer, Trip>> getRidesIterator() {
+		Iterator<Entry<Integer, Trip>> it = rides.iterator();
+		DoublyLinkedList<Entry<Integer, Trip>> toSort = new DoublyLinkedList<>();
+	
+		while(it.hasNext()) {
+			toSort.addLast(it.next());
+		}
+		return RadixSort.sort(toSort, 8).iterator();
 	}
 
 }
