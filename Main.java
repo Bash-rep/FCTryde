@@ -164,7 +164,7 @@ public class Main {
 		}
 		while (iterator.hasNext()) {
 			Trip trip = iterator.next().getValue();
-			System.out.println(trip.getOwner().getEmail() + "\n" + trip.getStart() + "-" + trip.getEnd() + "\n" + trip.getDate() + " " + trip.getDuration() + "\n");
+			System.out.println(trip.getOwner().getEmail() + "\n" + trip.getStart() + "-" + trip.getEnd() + "\n" + trip.getDate() + " " + trip.getDuration());
 		}
 		System.out.println();
 	}
