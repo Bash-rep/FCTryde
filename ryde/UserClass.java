@@ -127,7 +127,10 @@ public class UserClass implements User {
 	public Iterator<Entry<Integer, Trip>> getTripsIterator() {
 		Iterator<Entry<Integer, Trip>> it = trips.iterator();
 		DoublyLinkedList<Entry<Integer, Trip>> toSort = new DoublyLinkedList<>();
-	
+
+		if(!it.hasNext()) {
+			return trips.iterator();
+		}
 		while(it.hasNext()) {
 			toSort.addLast(it.next());
 		}
@@ -138,7 +141,11 @@ public class UserClass implements User {
 	public Iterator<Entry<Integer, Trip>> getRidesIterator() {
 		Iterator<Entry<Integer, Trip>> it = rides.iterator();
 		DoublyLinkedList<Entry<Integer, Trip>> toSort = new DoublyLinkedList<>();
-	
+		
+		if(!it.hasNext()) {
+			return rides.iterator();
+		}
+		
 		while(it.hasNext()) {
 			toSort.addLast(it.next());
 		}

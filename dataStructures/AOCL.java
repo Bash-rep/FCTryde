@@ -55,6 +55,12 @@ public class AOCL {
 			}
 		}
 		
+		if(head == null) {
+			for(int i = 0 ; i < size && head == null; i++) {
+				head = elements[i].head;
+			}
+		}
+		
 		initialize(size);
 		
 		return head;

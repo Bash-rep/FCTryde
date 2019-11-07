@@ -166,6 +166,7 @@ public class Main {
 			Trip trip = iterator.next().getValue();
 			System.out.println(trip.getOwner().getEmail() + "\n" + trip.getStart() + "-" + trip.getEnd() + "\n" + trip.getDate() + " " + trip.getDuration() + "\n");
 		}
+		System.out.println();
 	}
 
 	private static void printList(Iterator<Entry<Integer, Trip>> iterator) {
@@ -175,6 +176,7 @@ public class Main {
 		while (iterator.hasNext()) {
 			System.out.println(iterator.next().getValue());
 		}
+		System.out.println();
 	}
 
 
