@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import dataStructures.Entry;
 import dataStructures.Iterator;
+import dataStructures.Map;
 import exception.CannotCatchOwnRideException;
 import exception.InvalidPasswordException;
 import exception.InvalidTripDateException;
@@ -164,4 +165,8 @@ public interface Ryde extends Serializable {
 	 * @return
 	 */
 	Iterator<Entry<Integer, Trip>> tripsIterator(String email);
+
+	Iterator<Entry<String,Trip>> getAllTripsOnThisDate(Date date) throws InvalidTripDateException;
+
+	Iterator<Entry<Date, Map<String, Trip>>> getAllTrips();
 }

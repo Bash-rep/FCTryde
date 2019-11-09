@@ -4,6 +4,7 @@ import dataStructures.Entry;
 import dataStructures.Iterator;
 import dataStructures.Map;
 import dataStructures.MapWithJavaClass;
+import dataStructures.SortedMapWithJavaClass;
 import exception.*;
 
 public class RydeClass implements Ryde {
@@ -13,12 +14,12 @@ public class RydeClass implements Ryde {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	Map<String, Map<String, Trip>> ridesByDate;
+	Map<Date, Map<String, Trip>> tripsByDate;
 	Map<String, User> users;
 	User current;
 
 	public RydeClass() {
-		this.ridesByDate = new MapWithJavaClass<String, Map<String, Trip>>();
+		this.tripsByDate = new SortedMapWithJavaClass<Date, Map<String, Trip>>(0);
 
 		this.users = new MapWithJavaClass<String, User>();
 
@@ -56,12 +57,29 @@ public class RydeClass implements Ryde {
 
 	@Override
 	public int addTrip(String start, String end, Date date, int duration, int seats) throws TwoTripsOnSameDayException {
-		return current.addTrip(date, new TripClass(current, start, end, date, duration, seats));
+		Trip trip = new TripClass(current, start, end, date, duration, seats);
+		
+		int a = current.addTrip(date, trip);
+		
+		Map<String,Trip> map = tripsByDate.find(date);
+		
+		if(map == null) {
+			map = new SortedMapWithJavaClass<String, Trip>(0);
+			tripsByDate.insert(date, map);
+		}
+		
+		map.insert(current.getEmail(), trip);
+
+		return a;
 	}
+
+
 
 	@Override
 	public String removeTrip(Date date) throws TripHasRidesException, InvalidTripDateException {
-		return current.removeTrip(date).toString();
+		String s = current.removeTrip(date).toString();
+		tripsByDate.find(date).remove(current.getEmail());
+		return s;
 	}
 
 	@Override
@@ -119,6 +137,19 @@ public class RydeClass implements Ryde {
 	@Override
 	public Iterator<Entry<Integer, Trip>> tripsIterator(String email) {
 		return users.find(email).getTripsIterator();
+	}
+
+	@Override
+	public Iterator<Entry<String, Trip>> getAllTripsOnThisDate(Date date) throws InvalidTripDateException {
+		Map<String, Trip> map;
+		if((map = tripsByDate.find(date)) == null)
+			throw new InvalidTripDateException();		
+		return map.iterator();
+	}
+	
+	@Override
+	public Iterator<Entry<Date, Map<String, Trip>>> getAllTrips() {
+		return tripsByDate.iterator();
 	}
 
 }

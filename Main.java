@@ -8,6 +8,7 @@ import java.util.Scanner;
 
 import dataStructures.Entry;
 import dataStructures.Iterator;
+import dataStructures.Map;
 import exception.CannotCatchOwnRideException;
 import exception.InvalidPasswordException;
 import exception.InvalidTripDateException;
@@ -133,12 +134,18 @@ public class Main {
 		if (ryde.getCurrentUserEmail() == null) {
 			System.out.println(INVALID_CMD);
 		}
-		if (in.hasNextInt()) {
-			String timeStr = "0:0";
-			Date date = dateFromString(in.nextLine().trim(), timeStr);
+		/*
+		 * if (in.hasNext(MINHAS) || in.hasNext(BOLEIAS) || in.hasNext(TODAS)) { switch
+		 * (in.nextLine().trim().toLowerCase()) { case MINHAS:
+		 * printList(ryde.tripsIterator()); break; case BOLEIAS:
+		 * printSecureList(ryde.ridesIterator()); break; case TODAS:
+		 * printAnotherDifferentFormatOfAListBecauseThisIsReallyImportantAndFun(ryde.
+		 * getAllTrips()); break; } } else {
+		 */
 
-		} else if (in.hasNext(MINHAS) || in.hasNext(BOLEIAS) || in.hasNext(TODAS)) {
-			switch (in.nextLine().trim().toLowerCase()) {
+		String email = in.nextLine().trim();
+		if (email.equalsIgnoreCase(MINHAS) || email.equalsIgnoreCase(BOLEIAS) || email.equalsIgnoreCase(TODAS)) {
+			switch (email.toLowerCase()) {
 			case MINHAS:
 				printList(ryde.tripsIterator());
 				break;
@@ -146,16 +153,60 @@ public class Main {
 				printSecureList(ryde.ridesIterator());
 				break;
 			case TODAS:
+				printAnotherDifferentFormatOfAListBecauseThisIsReallyImportantAndFun(ryde.getAllTrips());
 				break;
 			}
-		} else {
-			String email = in.nextLine().trim();
-			if(ryde.hasUser(email)) {
+		} else if (email.chars().anyMatch(Character::isLetter)) {
+			if (ryde.hasUser(email)) {
 				printSecureList(ryde.tripsIterator(email));
-			}else {
+			} else {
+				// System.out.println("o email era>" + email );
+
 				System.out.println("Nao existe o utilizador dado.");
 			}
+		} else {
+			Date date = dateFromString(email, "0:0");
+			try {
+				if (dateIsValid(date)) {
+					printEmailList(ryde.getAllTripsOnThisDate(date));
+				} else {
+					System.out.println(INVALID_DATE);
+				}
+			} catch (InvalidTripDateException e) {
+				System.out.println("Sem deslocacoes.");
+			}
 		}
+	}
+
+	private static void printAnotherDifferentFormatOfAListBecauseThisIsReallyImportantAndFun(
+			Iterator<Entry<Date, Map<String, Trip>>> iterator) {
+		if (!iterator.hasNext()) {
+			System.out.println("Sem deslocacoes.");
+		}
+		while (iterator.hasNext()) {
+			Entry<Date, Map<String, Trip>> map = iterator.next();
+
+			Iterator<Entry<String, Trip>> it = map.getValue().iterator();
+			while (it.hasNext()) {
+				Entry<String, Trip> entry = it.next();
+				System.out.println(entry.getValue().getDate().getDay() + "-" + entry.getValue().getDate().getMonth()
+						+ "-" + entry.getValue().getDate().getYear() + " " + entry.getKey() + "\n");
+			}
+		}
+
+	}
+
+	private static void printEmailList(Iterator<Entry<String, Trip>> iterator) {
+		if (!iterator.hasNext()) {
+			System.out.println("Sem deslocacoes.");
+		}
+		while (iterator.hasNext()) {
+			Entry<String, Trip> entry = iterator.next();
+			if (entry.getValue().freeSeats() > 0) {
+				System.out.println(entry.getKey() + "\n");
+			}
+		}
+
 	}
 
 	private static void printSecureList(Iterator<Entry<Integer, Trip>> iterator) {
@@ -164,10 +215,11 @@ public class Main {
 		}
 		while (iterator.hasNext()) {
 			Trip trip = iterator.next().getValue();
-			System.out.println(trip.getOwner().getEmail() + "\n" + trip.getStart() + "-" + trip.getEnd() + "\n" + trip.getDate() + " " + trip.getDuration());
+			System.out.println(trip.getOwner().getEmail() + "\n" + trip.getStart() + "-" + trip.getEnd() + "\n"
+					+ trip.getDate() + " " + trip.getDuration());
 			System.out.println();
 		}
-		
+
 	}
 
 	private static void printList(Iterator<Entry<Integer, Trip>> iterator) {
@@ -178,9 +230,8 @@ public class Main {
 			System.out.println(iterator.next().getValue());
 			System.out.println();
 		}
-		
-	}
 
+	}
 
 	private static void processConsult(Scanner in, Ryde ryde) {
 		String email = in.next().trim();
