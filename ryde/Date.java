@@ -99,6 +99,6 @@ public class Date implements Comparable<Date>, Serializable {
 	}
 	
 	public int toInt() {
-		return (year*1000)+(month*100)+day;
+		return (year*10000)+(month*100)+day;
 	} 
 }
