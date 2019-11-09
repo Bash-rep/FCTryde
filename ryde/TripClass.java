@@ -24,7 +24,7 @@ public class TripClass implements Trip {
 		this.date = date;
 		this.duration = duration;
 		this.seats = seats;
-		inCar = new MapWithJavaClass<>();
+		inCar = new SortedMapWithJavaClass<>(0);
 		queue = new QueueInArray<>();
 	}
 
@@ -88,6 +88,7 @@ public class TripClass implements Trip {
 
 	@Override
 	public String toString() {
+		
 		Iterator<User> it = inCar.values();
 
 		String carPeople = "Boleias: ";

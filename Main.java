@@ -64,7 +64,7 @@ public class Main {
 	private static final String CANNOT_CATCH_OWN_RIDE = "%s nao pode dar boleia a si proprio.\n";
 	private static final String TRIP_OR_RIDE_ON_SAME_DAY = "%s ja registou uma boleia ou deslocacao nesta data.\n";
 	private static final String INVALID_TRIP_DATE = "Deslocacao nao existe.";
-	private static final String IN_QUEUE = "Ficou na fila de espera (posicao %d)\n";
+	private static final String IN_QUEUE = "Ficou na fila de espera (posicao %d).\n";
 	private static final String NEW_RIDE_SUCCESS = "Boleia registada.";
 	private static final String INVALID_DATE = "Data invalida.";
 	private static final String REMOVE_RIDE_SUCCESS = "%s boleia retirada.\n";
@@ -86,7 +86,7 @@ public class Main {
 		mainCycle: while (true != false) {
 			printPrompt(ryde);
 			cmd = readCmd(in);
-			switch (cmd) {
+			switch (cmd.toLowerCase()) {
 			case LIST:
 				processList(in, ryde);
 				break;
@@ -134,15 +134,6 @@ public class Main {
 		if (ryde.getCurrentUserEmail() == null) {
 			System.out.println(INVALID_CMD);
 		}
-		/*
-		 * if (in.hasNext(MINHAS) || in.hasNext(BOLEIAS) || in.hasNext(TODAS)) { switch
-		 * (in.nextLine().trim().toLowerCase()) { case MINHAS:
-		 * printList(ryde.tripsIterator()); break; case BOLEIAS:
-		 * printSecureList(ryde.ridesIterator()); break; case TODAS:
-		 * printAnotherDifferentFormatOfAListBecauseThisIsReallyImportantAndFun(ryde.
-		 * getAllTrips()); break; } } else {
-		 */
-
 		String email = in.nextLine().trim();
 		if (email.equalsIgnoreCase(MINHAS) || email.equalsIgnoreCase(BOLEIAS) || email.equalsIgnoreCase(TODAS)) {
 			switch (email.toLowerCase()) {
@@ -160,8 +151,6 @@ public class Main {
 			if (ryde.hasUser(email)) {
 				printSecureList(ryde.tripsIterator(email));
 			} else {
-				// System.out.println("o email era>" + email );
-
 				System.out.println("Nao existe o utilizador dado.");
 			}
 		} else {
