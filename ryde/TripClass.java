@@ -10,7 +10,7 @@ public class TripClass implements Trip {
 	private static final long serialVersionUID = 1L;
 
 	Queue<User> queue;
-	List<User> inCar;
+	Map<String, User> inCar;
 	User owner;
 	String start, end;
 	Date date;
@@ -24,7 +24,7 @@ public class TripClass implements Trip {
 		this.date = date;
 		this.duration = duration;
 		this.seats = seats;
-		inCar = new DoublyLinkedList<>();
+		inCar = new SortedMapWithJavaClass<>(0);
 		queue = new QueueInArray<>();
 	}
 
@@ -70,7 +70,7 @@ public class TripClass implements Trip {
 
 	@Override
 	public int add(User current) {
-		if (inCar.find(current) == -1) {
+		if (inCar.find(current.getEmail()) != null) {
 			System.out.println("ERRO: Isto nao pode acontecer (TripClass)");
 		}
 		return allocateUser(current);
@@ -78,7 +78,7 @@ public class TripClass implements Trip {
 
 	@Override
 	public void removeRide(User current) {
-		if (inCar.remove(inCar.find(current)).getEmail() == null) {
+		if (inCar.remove(current.getEmail()) == null) {
 			System.out.println("ERRO: Isto nao pode acontecer (TripClass)");
 		}
 		if (queue.size() > 0) {
@@ -89,16 +89,15 @@ public class TripClass implements Trip {
 	@Override
 	public String toString() {
 		
-		Iterator<User> it;
+		Iterator<User> it = inCar.values();
 
 		String carPeople = "Boleias: ";
 
-		if (inCar.size() > 0) {
+		while (it.hasNext()) {
+			carPeople += it.next().getEmail() + "; ";
+		}
+		if (!carPeople.equalsIgnoreCase("Boleias: ")) {
 			carPeople = carPeople.substring(0, Math.min(carPeople.length(), carPeople.length() - 2));
-			it = inCar.iterator();
-			while (it.hasNext()) {
-				carPeople += it.next().getEmail() + "; ";
-			}
 		} else {
 			carPeople = "Sem boleias registadas.";
 		}
@@ -117,7 +116,7 @@ public class TripClass implements Trip {
 			nextUserInQueue = queue.dequeue();
 			try {
 				nextUserInQueue.addRide(getDate(), this);
-				inCar.addLast(nextUserInQueue);
+				inCar.insert(nextUserInQueue.getEmail(), nextUserInQueue);
 			} catch (TwoTripsOnSameDayException e) {
 			}
 		}
@@ -125,7 +124,7 @@ public class TripClass implements Trip {
 
 	private int allocateUser(User current) {
 		if (freeSeats() > 0) {
-			inCar.addLast(current);
+			inCar.insert(current.getEmail(), current);
 			return 0;
 		}
 		queue.enqueue(current);
