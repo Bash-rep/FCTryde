@@ -1,22 +1,22 @@
 package dataStructures;
 
+import ryde.Trip;
 
-public class RadixSort<V> {
+public class RadixSort {
 	
-	
-	public  List<Entry<Integer, V>> sort(DoublyLinkedList<Entry<Integer, V>> sortables, int maxSize) {
+	public static List<Entry<Integer, Trip>> sort(DoublyLinkedList<Entry<Integer, Trip>> sortables, int maxSize) {
 		
-		DListNode<Entry<Integer, V>> node;
+		DListNode<Entry<Integer, Trip>> node;
 		
 		if ((node = sortables.head) == null) {
 			return null;
 		}
 		
-		AOCL<V> buckets = new AOCL<>(10);
+		AOCL buckets = new AOCL(10);
 		
 		int bucketIndex;
 		int currentKey;
-		Entry<Integer, V> currentEntry;
+		Entry<Integer, Trip> currentEntry;
 		
 		for (int i = 1; i <= maxSize; i++) {
 			do {
@@ -28,7 +28,7 @@ public class RadixSort<V> {
 			node = buckets.concatAll();
 		}
 		
-		DoublyLinkedList<Entry<Integer, V>> sorted = new DoublyLinkedList<>();
+		DoublyLinkedList<Entry<Integer, Trip>> sorted = new DoublyLinkedList<>();
 		
 		do {
 			sorted.addLast(node.getElement());

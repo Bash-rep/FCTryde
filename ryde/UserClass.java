@@ -128,24 +128,19 @@ public class UserClass implements User {
 		Iterator<Entry<Integer, Trip>> it = trips.iterator();
 		DoublyLinkedList<Entry<Integer, Trip>> toSort = new DoublyLinkedList<>();
 
-		RadixSort<Trip> alg = new RadixSort<Trip>();
-		
 		if(!it.hasNext()) {
 			return trips.iterator();
 		}
 		while(it.hasNext()) {
 			toSort.addLast(it.next());
 		}
-		return alg.sort(toSort, 8).iterator();
+		return RadixSort.sort(toSort, 8).iterator();
 	}
 
 	@Override
 	public Iterator<Entry<Integer, Trip>> getRidesIterator() {
 		Iterator<Entry<Integer, Trip>> it = rides.iterator();
 		DoublyLinkedList<Entry<Integer, Trip>> toSort = new DoublyLinkedList<>();
-		
-		RadixSort<Trip> alg = new RadixSort<Trip>();
-		
 		
 		if(!it.hasNext()) {
 			return rides.iterator();
@@ -154,7 +149,7 @@ public class UserClass implements User {
 		while(it.hasNext()) {
 			toSort.addLast(it.next());
 		}
-		return alg.sort(toSort, 8).iterator();
+		return RadixSort.sort(toSort, 8).iterator();
 	}
 
 }
