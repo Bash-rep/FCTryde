@@ -1,2 +1,2 @@
 # FCTryde
-South Park is a great show
+ A program to control the renting and stock of rental bikes in a city
